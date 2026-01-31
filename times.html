@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Times | Canalhas News</title>
+    <link rel="shortcut icon" href="img/logo.png" type="image/png">
+    <link rel="icon" href="img/logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Behind The Gesture';
+            src: url('fonts/BehindTheGesture.ttf') format('truetype');
+        }
+
+        :root {
+            --red-primary: #E30613;
+            --red-dark: #8a0000;
+            --black-bg: #0f0f0f;
+            --card-bg: #181818;
+            --text-light: #ffffff;
+            --text-gray: #b0b0b0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: var(--black-bg);
+            color: var(--text-light);
+        }
+
+        /* Header */
+        header {
+            background-color: rgba(15, 15, 15, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #333;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: var(--text-light);
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+        }
+
+        .logo-text {
+            font-family: 'Behind The Gesture', 'Oswald', sans-serif;
+            font-size: 2.5rem;
+            font-weight: normal;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            line-height: 1;
+        }
+
+        .logo-text span {
+            font-family: 'Behind The Gesture', 'Oswald', sans-serif;
+            color: var(--red-primary);
+            font-size: 1.1em;
+            font-weight: normal;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--red-primary);
+        }
+
+        /* Mobile Menu Styles */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--text-light);
+            transition: 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: flex;
+                margin-left: auto;
+            }
+
+            .logo {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: rgba(15, 15, 15, 0.98);
+                padding: 1rem 0;
+                border-bottom: 1px solid #333;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav.active {
+                display: flex;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 1.5rem;
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        /* Page Layout */
+        .page-wrapper {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 2rem;
+        }
+
+        .main-content {
+            max-width: 1200px;
+            justify-self: center;
+            width: 100%;
+        }
+
+        /* Section Titles */
+        h2.section-title {
+            position: relative;
+            margin-bottom: 4rem;
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            text-align: center;
+            color: var(--red-primary);
+        }
+
+        /* Search Styles */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            padding: 0 1rem;
+        }
+
+        #playerSearch {
+            background-color: var(--card-bg);
+            border: 1px solid #333;
+            padding: 12px 20px;
+            border-radius: 30px;
+            color: var(--text-light);
+            font-family: 'Roboto', sans-serif;
+            width: 100%;
+            max-width: 400px;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        #playerSearch:focus {
+            outline: none;
+            border-color: var(--red-primary);
+            box-shadow: 0 0 10px rgba(227, 6, 19, 0.3);
+        }
+
+        /* Roster Styles */
+        .roster-team {
+            margin-bottom: 4rem;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .roster-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .roster-tabs button {
+            background-color: var(--card-bg);
+            color: var(--text-light);
+            border: 1px solid #333;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .roster-tabs button:hover {
+            background-color: #333;
+            transform: translateY(-2px);
+        }
+
+        .roster-tabs button.active {
+            background-color: var(--red-primary);
+            color: white;
+            border-color: var(--red-primary);
+        }
+
+        .team-name {
+            font-size: 1.8rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #333;
+            padding-bottom: 1rem;
+        }
+
+        .player-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .player-card {
+            background-color: var(--card-bg);
+            border-radius: 4px;
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.3s;
+            border-top: 3px solid var(--red-primary);
+            cursor: pointer;
+        }
+
+        .player-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .player-card:hover .player-image {
+            transform: scale(1.1);
+        }
+
+        .player-image {
+            height: 240px;
+            background-size: cover;
+            background-position: center top;
+            background-color: #333;
+            transition: transform 0.5s ease;
+        }
+
+        .player-info {
+            padding: 1rem;
+        }
+
+        .player-role {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .player-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+
+        .image-source {
+            display: block;
+            font-size: 0.7rem;
+            color: var(--text-gray);
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            width: 90%;
+            max-width: 800px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: scale(0.9);
+            transition: transform 0.3s;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            color: var(--text-gray);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+            z-index: 10;
+        }
+
+        .modal-close:hover {
+            color: var(--red-primary);
+            transform: rotate(90deg);
+        }
+
+        .modal-role {
+            color: var(--red-primary);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            display: block;
+        }
+
+        .modal-name {
+            font-size: 2.5rem;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        /* New Modal Styles for JS Content */
+        .modal-header {
+            display: flex;
+            align-items: center;
+            padding: 2rem;
+            background-color: #111;
+            gap: 2rem;
+            border-bottom: 1px solid #333;
+        }
+
+        .modal-player-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center top;
+            border: 3px solid var(--red-primary);
+            flex-shrink: 0;
+        }
+
+        .modal-body {
+            padding: 0;
+            overflow-y: auto;
+            max-height: 60vh;
+        }
+
+        /* Accordion */
+        .accordion-item {
+            border-bottom: 1px solid #333;
+        }
+
+        .accordion-header {
+            width: 100%;
+            text-align: left;
+            background: var(--card-bg);
+            border: none;
+            color: var(--text-light);
+            padding: 1.5rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background-color: #222;
+        }
+
+        .accordion-header::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--red-primary);
+        }
+
+        .accordion-header.active::after {
+            content: '-';
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: #111;
+        }
+
+        .accordion-inner {
+            padding: 1.5rem 2rem;
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        .accordion-inner ul {
+            list-style: none;
+            margin-top: 0.5rem;
+        }
+        
+        .accordion-inner li::before {
+            content: '•';
+            color: var(--red-primary);
+            margin-right: 10px;
+        }
+
+        /* Stats & Results */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 1rem;
+        }
+
+        .stat-box {
+            background-color: #222;
+            padding: 1rem;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .stat-box small {
+            display: block;
+            color: var(--text-gray);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .stat-box div {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #222;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .match-team-logo {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                max-height: 90vh;
+            }
+            .modal-header {
+                flex-direction: column;
+                text-align: center;
+                padding: 1.5rem;
+            }
+        }
+
+        /* Sidebar */
+        .sidebar {
+            order: -1;
+        }
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            position: sticky;
+            top: 100px;
+        }
+
+        .nav-item {
+            color: var(--text-gray);
+            transition: color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            font-size: 0.7rem;
+            font-weight: 600;
+            gap: 5px;
+            text-align: center;
+        }
+
+        .nav-item:hover {
+            color: var(--red-primary);
+        }
+
+        .nav-item svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #000;
+            padding: 3rem 2rem 1rem;
+            margin-top: 4rem;
+            color: var(--text-gray);
+            border-top: 3px solid var(--red-primary);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto 2rem auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h4 {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .footer-section.about .logo {
+            margin-bottom: 1rem;
+        }
+
+        .footer-section.about p {
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .social-links {
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+        }
+
+        .social-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--red-primary);
+            transform: translateY(-3px);
+        }
+
+        .social-links svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        .newsletter form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .newsletter input {
+            background-color: var(--card-bg);
+            border: 1px solid #333;
+            padding: 12px;
+            border-radius: 4px;
+            color: var(--text-light);
+            font-family: 'Roboto', sans-serif;
+            margin-bottom: 10px;
+        }
+
+        .newsletter button {
+            background-color: var(--red-primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .newsletter button:hover {
+            background-color: var(--red-dark);
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #333;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">
+            <img src="img/logo.png" alt="Canalhas News Logo">
+            <div class="logo-text">
+                Canalhas <span>News</span>
+            </div>
+        </a>
+        <button class="mobile-menu-btn" aria-label="Abrir menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav>
+            <ul>
+                <li><a href="index.html">Notícias</a></li>
+                <li><a href="times.html">Times</a></li>
+                <li><a href="sobre.html">Sobre</a></li>
+                <li><a href="contato.html">Contato</a></li>
+                <li><a href="index.html#schedule">Calendário</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="page-wrapper">
+        <main class="main-content">
+            <section id="rosters">
+                <h2 class="section-title">NOSSOS JOGADORES</h2>
+
+                <div class="search-container">
+                    <input type="text" id="playerSearch" placeholder="Buscar jogador por nome...">
+                </div>
+
+                <div class="roster-tabs">
+                    <button class="active" data-filter="all">Todos</button>
+                    <button data-filter="lol">League of Legends</button>
+                    <button data-filter="cs2">CS2</button>
+                    <button data-filter="valorant">Valorant</button>
+                </div>
+
+                <!-- LoL Roster -->
+                <div class="roster-team" data-category="lol">
+                    <h3 class="team-name">League of Legends</h3>
+                    <div class="player-grid">
+                        <!-- Player Cards -->
+                        <div class="player-card"><div class="player-image" style="background-image: url('img/fnb.jpg')"></div><div class="player-info"><span class="player-role">Top</span><span class="player-name">fNb</span><span class="image-source">Reprodução/Redes Sociais</span></div></div>
+                        <div class="player-card"><div class="player-image" style="background-image: url('img/curse.jpg')"></div><div class="player-info"><span class="player-role">Jungle</span><span class="player-name">Curse</span><span class="image-source">Reprodução/Redes Sociais</span></div></div>
+                        <div class="player-card"><div class="player-image" style="background-image: url('img/kaze.jpg')"></div><div class="player-info"><span class="player-role">Mid</span><span class="player-name">Kaze</span><span class="image-source">Reprodução/Redes Sociais</span></div></div>
+                        <div class="player-card"><div class="player-image" style="background-image: url('img/rabelo.jpg')"></div><div class="player-info"><span class="player-role">ADC</span><span class="player-name">Rabelo</span><span class="image-source">Reprodução/Redes Sociais</span></div></div>
+                        <div class="player-card"><div class="player-image" style="background-image: url('img/frosty.jpg')"></div><div class="player-info"><span class="player-role">Support</span><span class="player-name">Frosty</span><span class="image-source">Reprodução/Redes Sociais</span></div></div>
+                        <div class="player-card"><div class="player-image" style="background-image: url('img/tockers.jpg')"></div><div class="player-info"><span class="player-role">Coach</span><span class="player-name">Tockers</span><span class="image-source">Reprodução/Redes Sociais</span></div></div>
+                    </div>
+                </div>
+
+                <!-- CS2 Roster -->
+                <div class="roster-team" data-category="cs2">
+                    <h3 class="team-name">Counter-Strike 2</h3>
+                    <div class="player-grid">
+                        <div class="player-card"><div class="player-image" style="background-image: url('img/drop.jpg')"></div><div class="player-info"><span class="player-role">IGL</span><span class="player-name">drop</span><span class="image-source">Reprodução/Redes Sociais</span></div></div>
+                        <div class="player-card"><div class="player-image" style="background-image: url('img/kauez.jpg')"></div><div class="player-info"><span class="player-role">Rifler</span><span class="player-name">kauez</span><span class="image-source">Reprodução/Redes Sociais</span></div></div>
+                        <div class="player-card"><div class="player-image" style="background-image: url('img/history.jpg')"></div><div class="player-info"><span class="player-role">Rifler</span><span class="player-name">history</span><span class="image-source">Reprodução/Redes Sociais</span></div></div>
+                        <div class="player-card"><div class="player-image" style="background-image: url('img/chay.jpg')"></div><div class="player-info"><span class="player-role">Rifler</span><span class="player-name">chayJESUS</span><span class="image-source">Reprodução/Redes Sociais</span></div></div>
+                        <div class="player-card"><div class="player-image" style="background-image: url('img/dav1deus.jpg')"></div><div class="player-info"><span class="player-role">Rifler</span><span class="player-name">dav1deuS</span><span class="image-source">Reprodução/Redes Sociais</span></div></div>
+                        <div class="player-card"><div class="player-image" style="background-image: url('img/tge.jpg')"></div><div class="player-info"><span class="player-role">Coach</span><span class="player-name">tge</span><span class="image-source">Reprodução/Redes Sociais</span></div></div>
+                    </div>
+                </div>
+
+                <!-- Valorant Roster -->
+                <div class="roster-team" data-category="valorant">
+                    <h3 class="team-name">Valorant</h3>
+                    <div class="player-grid">
+                        <div class="player-card"><div class="player-image" style="background-image: url('img/lowz.jpg')"></div><div class="player-info"><span class="player-role">Duelista</span><span class="player-name">lowz</span><span class="image-source">Reprodução/Redes Sociais</span></div></div>
+                        <div class="player-card"><div class="player-image" style="background-image: url('img/rglm.jpg')"></div><div class="player-info"><span class="player-role">Flex</span><span class="player-name">RgLM</span><span class="image-source">Reprodução/Redes Sociais</span></div></div>
+                        <div class="player-card"><div class="player-image" style="background-image: url('img/urango.jpg')"></div><div class="player-info"><span class="player-role">Iniciador</span><span class="player-name">Urango</span><span class="image-source">Reprodução/Redes Sociais</span></div></div>
+                        <div class="player-card"><div class="player-image" style="background-image: url('img/skz.jpg')"></div><div class="player-info"><span class="player-role">Controlador</span><span class="player-name">skz</span><span class="image-source">Reprodução/Redes Sociais</span></div></div>
+                        <div class="player-card"><div class="player-image" style="background-image: url('img/tinchoff.jpg')"></div><div class="player-info"><span class="player-role">Sentinela</span><span class="player-name">tinchoff</span><span class="image-source">Reprodução/Redes Sociais</span></div></div>
+                        <div class="player-card"><div class="player-image" style="background-image: url('img/dragzikw.jpg')"></div><div class="player-info"><span class="player-role">Coach</span><span class="player-name">DRAGziKW</span><span class="image-source">Reprodução/Redes Sociais</span></div></div>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item" title="Início">
+                    <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                    <span>Início</span>
+                </a>
+                <a href="index.html#news" class="nav-item" title="Notícias">
+                    <svg viewBox="0 0 24 24"><path d="M20 3H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h3l-1 1v2h12v-2l-1-1h3c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 13H4V5h16v11zM6 8h12v2H6zm0 4h12v2H6z"/></svg>
+                    <span>Notícias</span>
+                </a>
+                <a href="index.html#schedule" class="nav-item" title="Agenda">
+                    <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+                    <span>Agenda</span>
+                </a>
+                <a href="times.html" class="nav-item" title="Times">
+                    <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                    <span>Times</span>
+                </a>
+                <a href="campeonatos.html" class="nav-item" title="Campeonatos">
+                    <svg viewBox="0 0 24 24"><path d="M20.2 2H3.8C2.8 2 2 2.8 2 3.8V6c0 3.1 2.3 5.7 5.3 6 1.3 2.3 3.6 3.9 6.2 4v2H9v2h6v-2h-4.5c2.6-.1 4.9-1.7 6.2-4 3-.3 5.3-2.9 5.3-6V3.8c0-1-.8-1.8-1.8-1.8zM4 6V4h3v3.6C5.1 7.2 4 6.2 4 6zm13 1.6V4h3v2c0 1.8-1.1 3.2-3 3.6z"/></svg>
+                    <span>Camp.</span>
+                </a>
+            </nav>
+        </aside>
+    </div>
+
+    <!-- Player Modal -->
+    <div class="modal-overlay" id="playerModal">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <div id="modal-container">
+                <!-- O conteúdo do modal será injetado aqui pelo JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section about">
+                <div class="logo" style="margin-bottom: 1rem;">
+                    <img src="img/logo.png" alt="Canalhas News Logo">
+                    <div class="logo-text">
+                        Canalhas <span>News</span>
+                    </div>
+                </div>
+                <p>O seu portal de notícias não-oficial sobre a RED Canids Kalunga. Acompanhe a matilha de perto.</p>
+            </div>
+            <div class="footer-section social">
+                <h4>Siga a Matilha</h4>
+                <div class="social-links">
+                    <a href="https://x.com/REDcanalhas_" target="_blank" aria-label="X (Twitter)">
+                        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </a>
+                    <a href="https://www.instagram.com/redcanalhas_/" target="_blank" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-section newsletter">
+                <h4>Fique por dentro</h4>
+                <form>
+                    <input type="email" placeholder="Seu melhor e-mail" required>
+                    <button type="submit">Inscrever</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Canalhas News - Fã Site da Red Canids Kalunga</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabs = document.querySelectorAll('.roster-tabs button');
+            const rosters = document.querySelectorAll('.roster-team');
+            const searchInput = document.getElementById('playerSearch');
+
+            // Mobile Menu Logic
+            const mobileBtn = document.querySelector('.mobile-menu-btn');
+            const nav = document.querySelector('nav');
+
+            if(mobileBtn) {
+                mobileBtn.addEventListener('click', () => {
+                    nav.classList.toggle('active');
+                });
+            }
+
+            function filterPlayers() {
+                const activeTab = document.querySelector('.roster-tabs button.active');
+                const categoryFilter = activeTab.getAttribute('data-filter');
+                const searchTerm = searchInput.value.toLowerCase();
+
+                rosters.forEach(roster => {
+                    const rosterCategory = roster.getAttribute('data-category');
+                    const cards = roster.querySelectorAll('.player-card');
+                    let hasVisibleCards = false;
+
+                    // Verifica se o time corresponde à aba selecionada
+                    const isCategoryMatch = (categoryFilter === 'all' || categoryFilter === rosterCategory);
+
+                    if (isCategoryMatch) {
+                        // Filtra os cards dentro do time
+                        cards.forEach(card => {
+                            const playerName = card.querySelector('.player-name').textContent.toLowerCase();
+                            if (playerName.includes(searchTerm)) {
+                                card.style.display = 'block';
+                                hasVisibleCards = true;
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        });
+
+                        // Mostra o time apenas se tiver cards visíveis (ou se a busca estiver vazia e a categoria bater)
+                        if (searchTerm === '') {
+                            roster.style.display = 'block';
+                        } else {
+                            roster.style.display = hasVisibleCards ? 'block' : 'none';
+                        }
+                    } else {
+                        roster.style.display = 'none';
+                    }
+                });
+            }
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    filterPlayers();
+                });
+            });
+
+            searchInput.addEventListener('input', filterPlayers);
+
+            // Modal Logic
+            const modal = document.getElementById('playerModal');
+            const closeBtn = document.querySelector('.modal-close');
+            const playerCards = document.querySelectorAll('.player-card');
+            const modalContainer = document.getElementById('modal-container');
+
+            // --- CONFIGURAÇÃO DA RIOT API ---
+            const RIOT_API_KEY = 'RGAPI-753fab1b-8e68-4eea-8526-735af69f23f3'; // Sua chave
+            
+            // Proxy para evitar bloqueio de CORS (Apenas para desenvolvimento/testes)
+            // Para funcionar, visite https://cors-anywhere.herokuapp.com/corsdemo e ative.
+            const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
+
+            // Mapeamento dos Nicks REAIS (Riot ID) dos jogadores
+            // Você precisa descobrir o nick exato (Nome + Tag) que eles usam na SoloQ
+            const PRO_ACCOUNTS = {
+                'fNb': { name: 'Azul', tag: '999' },
+                'Curse': { name: 'Murloc Warleader', tag: 'OTK' },
+                'Kaze': { name: 'KAZE', tag: 'XXDD' },
+                'Rabelo': { name: 'xinsuixiaogou', tag: 'EGC' },
+                'Frosty': { name: 'xinsuixiaogou', tag: 'EGC' }
+            };
+
+            // Função para buscar Elo e Winrate
+            async function fetchRiotStats(internalName) {
+                const account = PRO_ACCOUNTS[internalName];
+                if (!account) return { error: 'Sem conta vinculada' };
+
+                try {
+                    // 1. Buscar PUUID pelo Riot ID (Americas)
+                    const accountUrl = `${CORS_PROXY}https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${encodeURIComponent(account.name)}/${encodeURIComponent(account.tag)}?api_key=${RIOT_API_KEY}`;
+                    const accRes = await fetch(accountUrl);
+                    if (!accRes.ok) throw new Error('Conta não encontrada');
+                    
+                    // Diagnóstico de Erros Comuns
+                    if (accRes.status === 403) return { error: 'Chave Vencida (403)' };
+                    if (accRes.status === 429) return { error: 'Muitos Pedidos (429)' };
+                    if (!accRes.ok) throw new Error(`Erro Account: ${accRes.status}`);
+                    
+                    const accData = await accRes.json();
+
+                    // 2. Buscar Summoner ID pelo PUUID (BR1)
+                    const sumUrl = `${CORS_PROXY}https://br1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/${accData.puuid}?api_key=${RIOT_API_KEY}`;
+                    const sumRes = await fetch(sumUrl);
+                    const sumData = await sumRes.json();
+
+                    // 3. Buscar Elo/Rank (League V4)
+                    const leagueUrl = `${CORS_PROXY}https://br1.api.riotgames.com/lol/league/v4/entries/by-summoner/${sumData.id}?api_key=${RIOT_API_KEY}`;
+                    const leagueRes = await fetch(leagueUrl);
+                    const leagueData = await leagueRes.json();
+
+                    // Filtrar apenas SoloQ
+                    const soloQ = leagueData.find(q => q.queueType === 'RANKED_SOLO_5x5');
+                    
+                    if (soloQ) {
+                        const totalGames = soloQ.wins + soloQ.losses;
+                        const winrate = Math.round((soloQ.wins / totalGames) * 100);
+                        
+                        return {
+                            tier: soloQ.tier,       // Ex: CHALLENGER
+                            rank: soloQ.rank,       // Ex: I
+                            lp: soloQ.leaguePoints,
+                            wins: soloQ.wins,
+                            losses: soloQ.losses,
+                            winrate: winrate + '%'
+                        };
+                    }
+                    return { error: 'Sem dados de SoloQ' };
+
+                } catch (error) {
+                    console.warn(`Erro ao buscar stats da Riot para ${internalName}:`, error);
+                    return { error: 'Erro Proxy/Net' };
+                }
+            }
+
+            // BANCO DE DADOS DOS JOGADORES (MODELO)
+            const playerData = {
+                'fNb': {
+                    fullName: 'Francisco Natanael Braz',
+                    age: '25 anos',
+                    bio: 'Top laner brasileiro conhecido por sua agressividade e vasto repertório de campeões. fNb iniciou sua carreira em 2017 e rapidamente se destacou no cenário nacional, passando por equipes como ProGaming e Santos antes de se juntar à RED Canids em 2021, onde se tornou uma peça fundamental da equipe.',
+                    pastTeams: ['ProGaming Esports', 'Santos e-Sports', 'RED Canids'],
+                    matches: [
+                        { opponent: 'LOUD', result: 'V 3-2', date: '05/09/25', championship: 'LTA South' },
+                        { opponent: 'paiN Gaming', result: 'V 3-0', date: '06/09/25', championship: 'LTA South' },
+                        { opponent: 'Vivo Keyd Stars', result: 'D 0-3', date: '07/09/25', championship: 'LTA South' },
+                        { opponent: 'Shopify Rebellion', result: 'V 3-2', date: '14/09/25', championship: 'LTA Finals' },
+                        { opponent: '100 Thieves', result: 'D 0-3', date: '21/09/25', championship: 'LTA Finals' },
+                    ],
+                    championships: [
+                        { name: 'CBLOL 2022 - Etapa 1', placement: '1º 🥇' },
+                        { name: 'MSI 2022', placement: '9º-10º' },
+                        { name: 'CBLOL 2024 - Etapa 1', placement: '3º 🥉' },
+                        { name: 'LTA 2025 Championship', placement: '4º' },
+                    ],
+                    stats: {
+                        mainChampions: ['K\'Sante', 'Renekton', 'Jax'],
+                        kda: '4.1',
+                        winRate: '68%',
+                        goldPerMinute: '421',
+                        damageShare: '24.5%',
+                        pentakills: '1'
+                    }
+                },
+                'Curse': {
+                    fullName: 'Gabriel Kay',
+                    age: '21 anos',
+                    bio: 'Caçador talentoso que trouxe uma nova dinâmica para a selva da RED. Conhecido por seu pathing inteligente e ganks agressivos no early game.',
+                    pastTeams: ['KaBuM! Esports', 'Flamengo'],
+                    matches: [
+                        { opponent: 'LOUD', result: 'V 3-2', date: '05/09/25', championship: 'LTA South' },
+                        { opponent: 'paiN Gaming', result: 'V 3-0', date: '06/09/25', championship: 'LTA South' }
+                    ],
+                    championships: [{ name: 'CBLOL 2026 - Etapa 1', placement: 'Em andamento' }],
+                    stats: { mainChampions: ['Viego', 'Lee Sin', 'Sejuani'], kda: '5.2', winRate: '70%', goldPerMinute: '380', damageShare: '18%', pentakills: '0' }
+                },
+                'Kaze': {
+                    fullName: 'Bruno Kaze',
+                    age: '19 anos',
+                    bio: 'Mid laner prodígio, Kaze é a aposta da RED para dominar a rota do meio. Mecanicamente superdotado, ele costuma brilhar com magos de controle e assassinos.',
+                    pastTeams: ['RED Academy'],
+                    matches: [
+                        { opponent: 'LOUD', result: 'V 3-2', date: '05/09/25', championship: 'LTA South' }
+                    ],
+                    championships: [{ name: 'CBLOL Academy 2025', placement: '1º 🥇' }],
+                    stats: { mainChampions: ['Azir', 'Ahri', 'Sylas'], kda: '4.8', winRate: '65%', goldPerMinute: '410', damageShare: '28%', pentakills: '2' }
+                },
+                'Rabelo': {
+                    fullName: 'Matheus Rabelo',
+                    age: '20 anos',
+                    bio: 'Atirador consistente e posicionado. Rabelo é a garantia de dano no late game para a matilha, sempre jogando no limite para maximizar seu DPS.',
+                    pastTeams: ['INTZ'],
+                    matches: [],
+                    championships: [],
+                    stats: { mainChampions: ['Kai\'Sa', 'Xayah', 'Zeri'], kda: '6.0', winRate: '62%', goldPerMinute: '450', damageShare: '30%', pentakills: '1' }
+                },
+                'Frosty': {
+                    fullName: 'Lucas Frosty',
+                    age: '22 anos',
+                    bio: 'Suporte cerebral e principal shotcaller da bot lane. Frosty é especialista em campeões de engage e proteção, garantindo que Rabelo brilhe.',
+                    pastTeams: ['Liberty'],
+                    matches: [],
+                    championships: [],
+                    stats: { mainChampions: ['Nautilus', 'Rakan', 'Lulu'], kda: '3.5', winRate: '62%', goldPerMinute: '250', damageShare: '8%', pentakills: '0' }
+                },
+                'Tockers': {
+                    fullName: 'Gabriel Claumann',
+                    age: '29 anos',
+                    bio: 'Lenda do cenário brasileiro como jogador, agora comanda a RED Canids como Head Coach. Tetracampeão do CBLOL, traz experiência e liderança inigualáveis.',
+                    pastTeams: ['INTZ', 'RED Canids (Player)', 'Vivo Keyd'],
+                    matches: [],
+                    championships: [{ name: 'CBLOL (Como Coach)', placement: 'Vários Títulos' }],
+                    stats: { mainChampions: ['Draft Kingdom'], kda: 'N/A', winRate: '100% (Draft)', goldPerMinute: 'N/A', damageShare: 'N/A', pentakills: 'N/A' }
+                },
+                // CS2
+                'drop': {
+                    fullName: 'André Abreu',
+                    age: '22 anos',
+                    bio: 'IGL e rifler, drop traz a experiência internacional de ter jogado Majors pela FURIA e MIBR. É o cérebro por trás das táticas da RED no CS2.',
+                    pastTeams: ['FURIA', 'MIBR'],
+                    matches: [{ opponent: 'FURIA', result: 'D 1-2', date: '31/01/26', championship: 'IEM Katowice' }],
+                    championships: [{ name: 'IEM Katowice 2026', placement: '3º-4º' }],
+                    stats: { mainChampions: ['AK-47', 'M4A1-S'], kda: '1.05 (Rating)', winRate: '55%', goldPerMinute: 'N/A', damageShare: '78 ADR', pentakills: '0' }
+                },
+                'kauez': {
+                    fullName: 'Kauê Kaschuk',
+                    age: '21 anos',
+                    bio: 'Um dos maiores talentos de mira do Brasil. Kauez é agressivo e costuma abrir os bombsites com facilidade.',
+                    pastTeams: ['FURIA Academy', 'paiN Gaming'],
+                    matches: [],
+                    championships: [],
+                    stats: { mainChampions: ['AK-47'], kda: '1.15 (Rating)', winRate: '58%', goldPerMinute: 'N/A', damageShare: '85 ADR', pentakills: '1' }
+                },
+                'history': {
+                    fullName: 'Gustavo Lawfel',
+                    age: '20 anos',
+                    bio: 'AWPer de ofício, history tem um estilo de jogo impactante, buscando picks iniciais que facilitam o round para a equipe.',
+                    pastTeams: ['Fluxo'],
+                    matches: [],
+                    championships: [],
+                    stats: { mainChampions: ['AWP'], kda: '1.12 (Rating)', winRate: '56%', goldPerMinute: 'N/A', damageShare: '75 ADR', pentakills: '2' }
+                },
+                'chayJESUS': {
+                    fullName: 'Richard Seidy',
+                    age: '23 anos',
+                    bio: 'Rifler versátil e clutch player. Chay é conhecido por resolver rounds impossíveis e manter a calma em situações de pressão.',
+                    pastTeams: ['Sharks'],
+                    matches: [],
+                    championships: [],
+                    stats: { mainChampions: ['M4A4'], kda: '1.08 (Rating)', winRate: '55%', goldPerMinute: 'N/A', damageShare: '80 ADR', pentakills: '0' }
+                },
+                'dav1deuS': {
+                    fullName: 'David Tapia',
+                    age: '24 anos',
+                    bio: 'O chileno que conquistou o Brasil. Agressivo e com uma mira afiada, dav1deuS completa o poder de fogo da RED.',
+                    pastTeams: ['9z Team', '00 Nation'],
+                    matches: [],
+                    championships: [],
+                    stats: { mainChampions: ['AK-47'], kda: '1.10 (Rating)', winRate: '54%', goldPerMinute: 'N/A', damageShare: '82 ADR', pentakills: '0' }
+                },
+                'tge': {
+                    fullName: 'Thiago Giannini',
+                    age: '28 anos',
+                    bio: 'Coach experiente que foca muito na parte tática e psicológica do time. Fundamental para manter a consistência da equipe.',
+                    pastTeams: ['Paquetá Gaming'],
+                    matches: [],
+                    championships: [],
+                    stats: { mainChampions: ['Tactics'], kda: 'N/A', winRate: 'N/A', goldPerMinute: 'N/A', damageShare: 'N/A', pentakills: 'N/A' }
+                },
+                // Valorant
+                'lowz': {
+                    fullName: 'Lorenzo Teodoro',
+                    age: '21 anos',
+                    bio: 'Duelista nato. Lowz é conhecido por sua Jett agressiva e por não ter medo de buscar o primeiro abate.',
+                    pastTeams: ['TBK'],
+                    matches: [{ opponent: 'Leviatan', result: 'V 2-0', date: '15/02/26', championship: 'VCT Americas' }],
+                    championships: [{ name: 'VCT Americas Kickoff', placement: 'Em andamento' }],
+                    stats: { mainChampions: ['Jett', 'Raze'], kda: '1.25', winRate: '60%', goldPerMinute: '240 ACS', damageShare: '160 ADR', pentakills: '3' }
+                },
+                'RgLM': {
+                    fullName: 'Rogelio M.',
+                    age: '22 anos',
+                    bio: 'Jogador flexível que se adapta ao que o time precisa. Pode jogar de iniciador ou controlador com a mesma eficiência.',
+                    pastTeams: ['RED Academy'],
+                    matches: [],
+                    championships: [],
+                    stats: { mainChampions: ['Omen', 'Viper', 'Skye'], kda: '1.05', winRate: '58%', goldPerMinute: '200 ACS', damageShare: '130 ADR', pentakills: '0' }
+                }
+            };
+
+            playerCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const playerName = card.querySelector('.player-name').textContent;
+                    const playerRole = card.querySelector('.player-role').textContent;
+                    const playerImg = card.querySelector('.player-image').style.backgroundImage;
+
+                    // Busca os dados do jogador. Se não encontrar, usa dados genéricos.
+                    const data = playerData[playerName] || {
+                        fullName: playerName,
+                        age: 'N/A',
+                        bio: `Atleta profissional de ${playerRole} atuando pela RED Canids Kalunga. Focado em trazer títulos para a matilha. (Dados completos em breve).`,
+                        pastTeams: ['N/A'],
+                        matches: [],
+                        championships: [],
+                        stats: { mainChampions: [], kda: 'N/A', winRate: 'N/A', goldPerMinute: 'N/A', damageShare: 'N/A', pentakills: 'N/A' }
+                    };
+
+                    // Sanitiza a URL da imagem para evitar conflito de aspas no HTML
+                    const safeImg = playerImg ? playerImg.replace(/"/g, "'") : '';
+
+                    // Mapeamento de logos dos times adversários
+                    const teamLogos = {
+                        'LOUD': 'img/loud.png',
+                        'paiN Gaming': 'img/logo pain.png',
+                        'Vivo Keyd Stars': 'img/logo vk.png',
+                        'Leviatan': 'img/logo leviatan.png',
+                        'FURIA': 'img/logo furia.png',
+                        'Fluxo': 'img/fluxow7m.png',
+                        'LOS': 'img/los.png',
+                        'Los Grandes': 'img/los.png'
+                    };
+
+                    // Constrói o HTML do modal dinamicamente
+                    modalContainer.innerHTML = `
+                        <div class="modal-header">
+                            <div class="modal-player-img" style="background-image: ${safeImg}"></div>
+                            <div class="modal-player-info">
+                                <h3 class="modal-name">${playerName}</h3>
+                                <span class="modal-role">${playerRole}</span>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <div class="accordion">
+                                <!-- Sobre -->
+                                <div class="accordion-item">
+                                    <button class="accordion-header">Sobre</button>
+                                    <div class="accordion-content">
+                                        <div class="accordion-inner">
+                                            <p><strong>Nome:</strong> ${data.fullName}<br><strong>Idade:</strong> ${data.age}</p>
+                                            <p>${data.bio}</p>
+                                            <h4 style="margin-top: 1rem;">Times Anteriores:</h4>
+                                            <ul>${data.pastTeams.map(team => `<li>${team}</li>`).join('')}</ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Partidas -->
+                                <div class="accordion-item">
+                                    <button class="accordion-header">Partidas Recentes</button>
+                                    <div class="accordion-content">
+                                        <div class="accordion-inner">
+                                            ${data.matches.length > 0 ? data.matches.map(match => {
+                                                // Verifica se existe logo para o time, senão não exibe nada
+                                                const logoHtml = teamLogos[match.opponent] ? `<img src="${teamLogos[match.opponent]}" class="match-team-logo" alt="${match.opponent}">` : '';
+                                                
+                                                return `
+                                                <div class="result-item">
+                                                    <span style="display: flex; align-items: center;">vs ${logoHtml}<strong style="color:white;">${match.opponent}</strong> <span style="font-size:0.8em; opacity:0.7; margin-left: 5px;">(${match.championship})</span></span>
+                                                    <span class="placement" style="color:${match.result.includes('V') ? '#4caf50' : '#f44336'}">${match.result}</span>
+                                                </div>
+                                            `}).join('') : '<p>Nenhum dado de partida recente.</p>'}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Campeonatos -->
+                                <div class="accordion-item">
+                                    <button class="accordion-header">Histórico de Campeonatos</button>
+                                    <div class="accordion-content">
+                                        <div class="accordion-inner">
+                                            ${data.championships.length > 0 ? data.championships.map(champ => `
+                                                <div class="result-item">
+                                                    <span>${champ.name}</span>
+                                                    <span class="placement">${champ.placement}</span>
+                                                </div>
+                                            `).join('') : '<p>Nenhum dado de campeonatos.</p>'}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Estatísticas -->
+                                <div class="accordion-item">
+                                    <button class="accordion-header">Estatísticas</button>
+                                    <div class="accordion-content">
+                                        <div class="accordion-inner">
+                                            <p style="margin-bottom:1.5rem;"><strong>Principais Campeões:</strong> <span style="color:white;">${data.stats.mainChampions.join(', ')}</span></p>
+                                            <div class="stat-grid">
+                                                <div class="stat-box"><small>Elo SoloQ</small><div id="stat-elo" style="font-size: 1rem; color: var(--red-primary);">Carregando...</div></div>
+                                                <div class="stat-box"><small>Win Rate</small><div id="stat-wr">${data.stats.winRate}</div></div>
+                                                <div class="stat-box"><small>Vitórias</small><div id="stat-wins">-</div></div>
+                                                <div class="stat-box"><small>KDA (Médio)</small><div>${data.stats.kda}</div></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+
+                    // Lógica do Acordeão
+                    const accHeaders = modalContainer.querySelectorAll('.accordion-header');
+                    accHeaders.forEach(header => {
+                        header.addEventListener('click', () => {
+                            header.classList.toggle('active');
+                            const content = header.nextElementSibling;
+                            if (content.style.maxHeight) {
+                                content.style.maxHeight = null;
+                            } else {
+                                content.style.maxHeight = content.scrollHeight + "px";
+                            }
+                        });
+                    });
+
+                    // Abrir o primeiro item por padrão
+                    const firstHeader = modalContainer.querySelector('.accordion-header');
+                    if(firstHeader) {
+                        firstHeader.click();
+                    }
+
+                    // --- CHAMADA DA API DA RIOT ---
+                    // Tenta buscar os dados reais e atualizar o modal aberto
+                    if (PRO_ACCOUNTS[playerName]) {
+                        fetchRiotStats(playerName).then(stats => {
+                            if (stats && !stats.error) {
+                                const eloEl = document.getElementById('stat-elo');
+                                const wrEl = document.getElementById('stat-wr');
+                                const winsEl = document.getElementById('stat-wins');
+
+                                if(eloEl) eloEl.innerHTML = `${stats.tier} ${stats.rank} <br><span style="font-size:0.8em; color:white;">${stats.lp} PDL</span>`;
+                                if(wrEl) wrEl.innerText = stats.winrate;
+                                if(winsEl) winsEl.innerText = stats.wins;
+                            } else {
+                                // Falha silenciosa (N/A) para manter o site bonito e sem erros visíveis
+                                document.getElementById('stat-elo').innerText = "N/A";
+                                document.getElementById('stat-elo').style.color = 'var(--text-gray)';
+                            }
+                        });
+                    } else {
+                        document.getElementById('stat-elo').innerText = "N/A";
+                    }
+                });
+            });
+
+            closeBtn.addEventListener('click', () => {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+                modalContainer.innerHTML = ''; // Limpa o conteúdo do modal ao fechar
+            });
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = '';
+                    modalContainer.innerHTML = ''; // Limpa o conteúdo do modal ao fechar
+                }
+            });
+        });
+    </script>
+</body>
+</html>
