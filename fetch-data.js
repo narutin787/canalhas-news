@@ -5,6 +5,7 @@ const path = require('path');
 const API_KEY = process.env.PANDASCORE_KEY; // A chave virá do GitHub Secrets
 const TEAM_ID = 1266; // ID da RED Canids (Confirme se é este mesmo)
 const OUTPUT_FILE = path.join(__dirname, 'data', 'matches.json');
+const OUTPUT_FILE_RESULTS = path.join(__dirname, 'data', 'results.json');
 
 // Mapeamento de Slugs da PandaScore para nossas categorias
 const GAME_MAP = {
@@ -13,26 +14,34 @@ const GAME_MAP = {
     'valorant': 'valorant'
 };
 
-async function fetchUpcomingMatches() {
+async function fetchMatches() {
     if (!API_KEY) {
         console.error('ERRO: Chave da API não encontrada.');
         process.exit(1);
     }
 
     try {
-        console.log('Buscando partidas futuras...');
+        console.log('Buscando dados da PandaScore...');
         
-        // Busca partidas onde a RED Canids (ID 1266) está jogando
-        // filter[status]=not_started garante apenas jogos futuros
-        const url = `https://api.pandascore.co/matches/upcoming?filter[opponent_id]=${TEAM_ID}&sort=begin_at&token=${API_KEY}`;
+        // 1. Busca partidas futuras (Upcoming)
+        const upcomingUrl = `https://api.pandascore.co/matches/upcoming?filter[opponent_id]=${TEAM_ID}&sort=begin_at&token=${API_KEY}`;
         
-        const response = await fetch(url);
-        if (!response.ok) throw new Error(`Erro na API: ${response.statusText}`);
+        // 2. Busca partidas passadas (Past) - Últimos 10 jogos
+        const pastUrl = `https://api.pandascore.co/matches/past?filter[opponent_id]=${TEAM_ID}&sort=-begin_at&page[size]=10&token=${API_KEY}`;
         
-        const matches = await response.json();
+        const [upcomingRes, pastRes] = await Promise.all([
+            fetch(upcomingUrl),
+            fetch(pastUrl)
+        ]);
+
+        if (!upcomingRes.ok) throw new Error(`Erro API Upcoming: ${upcomingRes.statusText}`);
+        if (!pastRes.ok) throw new Error(`Erro API Past: ${pastRes.statusText}`);
         
-        // Transforma os dados complexos da API no formato simples do nosso site
-        const simplifiedMatches = matches.map(match => {
+        const upcomingMatches = await upcomingRes.json();
+        const pastMatches = await pastRes.json();
+        
+        // Função auxiliar para simplificar os dados
+        const simplify = (match) => {
             // Encontra o oponente (quem NÃO é a RED Canids)
             const opponent = match.opponents.find(op => op.opponent.id !== TEAM_ID)?.opponent;
             
@@ -40,16 +49,33 @@ async function fetchUpcomingMatches() {
             const gameSlug = match.videogame.slug;
             const gameCategory = GAME_MAP[gameSlug] || 'outros';
 
+            // Calcula o resultado se a partida já acabou
+            let scoreResult = null;
+            if (match.status === 'finished' && match.results && match.results.length > 0) {
+                const redResult = match.results.find(r => r.team_id === TEAM_ID);
+                const oppResult = match.results.find(r => r.team_id !== TEAM_ID);
+                
+                if (redResult && oppResult) {
+                    const redScore = redResult.score;
+                    const oppScore = oppResult.score;
+                    scoreResult = redScore > oppScore ? `V ${redScore}-${oppScore}` : `D ${redScore}-${oppScore}`;
+                }
+            }
+
             return {
                 game: gameCategory,
                 league: match.league.name + (match.serie ? ` - ${match.serie.full_name}` : ''),
                 date: match.begin_at,
                 opponent: opponent ? opponent.name : 'A Definir',
-                logo: opponent ? opponent.image_url : null
+                logo: opponent ? opponent.image_url : null,
+                result: scoreResult
             };
-        });
+        };
 
-        console.log(`Encontradas ${simplifiedMatches.length} partidas.`);
+        const simplifiedUpcoming = upcomingMatches.map(simplify);
+        const simplifiedPast = pastMatches.map(simplify);
+
+        console.log(`Encontradas ${simplifiedUpcoming.length} partidas futuras e ${simplifiedPast.length} resultados passados.`);
 
         // Garante que a pasta 'data' existe
         const dir = path.dirname(OUTPUT_FILE);
@@ -57,9 +83,11 @@ async function fetchUpcomingMatches() {
             fs.mkdirSync(dir);
         }
 
-        // Salva o arquivo JSON
-        fs.writeFileSync(OUTPUT_FILE, JSON.stringify(simplifiedMatches, null, 2));
-        console.log('Arquivo data/matches.json atualizado com sucesso!');
+        // Salva os arquivos JSON
+        fs.writeFileSync(OUTPUT_FILE, JSON.stringify(simplifiedUpcoming, null, 2));
+        fs.writeFileSync(OUTPUT_FILE_RESULTS, JSON.stringify(simplifiedPast, null, 2));
+        
+        console.log('Arquivos de dados atualizados com sucesso!');
 
     } catch (error) {
         console.error('Falha ao buscar dados:', error);
@@ -68,4 +96,4 @@ async function fetchUpcomingMatches() {
     }
 }
 
-fetchUpcomingMatches();
+fetchMatches();

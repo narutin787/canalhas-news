@@ -926,75 +926,6 @@
             const playerCards = document.querySelectorAll('.player-card');
             const modalContainer = document.getElementById('modal-container');
 
-            // --- CONFIGURAÇÃO DA RIOT API ---
-            const RIOT_API_KEY = 'RGAPI-753fab1b-8e68-4eea-8526-735af69f23f3'; // Sua chave
-            
-            // Proxy para evitar bloqueio de CORS (Apenas para desenvolvimento/testes)
-            // Para funcionar, visite https://cors-anywhere.herokuapp.com/corsdemo e ative.
-            const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
-
-            // Mapeamento dos Nicks REAIS (Riot ID) dos jogadores
-            // Você precisa descobrir o nick exato (Nome + Tag) que eles usam na SoloQ
-            const PRO_ACCOUNTS = {
-                'fNb': { name: 'Azul', tag: '999' },
-                'Curse': { name: 'Murloc Warleader', tag: 'OTK' },
-                'Kaze': { name: 'KAZE', tag: 'XXDD' },
-                'Rabelo': { name: 'xinsuixiaogou', tag: 'EGC' },
-                'Frosty': { name: 'xinsuixiaogou', tag: 'EGC' }
-            };
-
-            // Função para buscar Elo e Winrate
-            async function fetchRiotStats(internalName) {
-                const account = PRO_ACCOUNTS[internalName];
-                if (!account) return { error: 'Sem conta vinculada' };
-
-                try {
-                    // 1. Buscar PUUID pelo Riot ID (Americas)
-                    const accountUrl = `${CORS_PROXY}https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${encodeURIComponent(account.name)}/${encodeURIComponent(account.tag)}?api_key=${RIOT_API_KEY}`;
-                    const accRes = await fetch(accountUrl);
-                    if (!accRes.ok) throw new Error('Conta não encontrada');
-                    
-                    // Diagnóstico de Erros Comuns
-                    if (accRes.status === 403) return { error: 'Chave Vencida (403)' };
-                    if (accRes.status === 429) return { error: 'Muitos Pedidos (429)' };
-                    if (!accRes.ok) throw new Error(`Erro Account: ${accRes.status}`);
-                    
-                    const accData = await accRes.json();
-
-                    // 2. Buscar Summoner ID pelo PUUID (BR1)
-                    const sumUrl = `${CORS_PROXY}https://br1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/${accData.puuid}?api_key=${RIOT_API_KEY}`;
-                    const sumRes = await fetch(sumUrl);
-                    const sumData = await sumRes.json();
-
-                    // 3. Buscar Elo/Rank (League V4)
-                    const leagueUrl = `${CORS_PROXY}https://br1.api.riotgames.com/lol/league/v4/entries/by-summoner/${sumData.id}?api_key=${RIOT_API_KEY}`;
-                    const leagueRes = await fetch(leagueUrl);
-                    const leagueData = await leagueRes.json();
-
-                    // Filtrar apenas SoloQ
-                    const soloQ = leagueData.find(q => q.queueType === 'RANKED_SOLO_5x5');
-                    
-                    if (soloQ) {
-                        const totalGames = soloQ.wins + soloQ.losses;
-                        const winrate = Math.round((soloQ.wins / totalGames) * 100);
-                        
-                        return {
-                            tier: soloQ.tier,       // Ex: CHALLENGER
-                            rank: soloQ.rank,       // Ex: I
-                            lp: soloQ.leaguePoints,
-                            wins: soloQ.wins,
-                            losses: soloQ.losses,
-                            winrate: winrate + '%'
-                        };
-                    }
-                    return { error: 'Sem dados de SoloQ' };
-
-                } catch (error) {
-                    console.warn(`Erro ao buscar stats da Riot para ${internalName}:`, error);
-                    return { error: 'Erro Proxy/Net' };
-                }
-            }
-
             // BANCO DE DADOS DOS JOGADORES (MODELO)
             const playerData = {
                 'fNb': {
@@ -1199,6 +1130,33 @@
                         'Los Grandes': 'img/los.png'
                     };
 
+                    // Função para pegar o ícone do Elo (Apenas LoL)
+                    const getRankIcon = (eloString) => {
+                        if (!eloString || eloString === 'N/A') return null;
+                        const tier = eloString.split(' ')[0].toLowerCase(); // Pega a primeira palavra (ex: "CHALLENGER")
+                        
+                        const rankMap = {
+                            'challenger': 'challenger',
+                            'grandmaster': 'grandmaster', 'gm': 'grandmaster',
+                            'master': 'master',
+                            'diamond': 'diamond',
+                            'emerald': 'emerald',
+                            'platinum': 'platinum',
+                            'gold': 'gold',
+                            'silver': 'silver',
+                            'bronze': 'bronze',
+                            'iron': 'iron'
+                        };
+
+                        if (rankMap[tier]) {
+                            return `https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-shared-components/global/default/images/${rankMap[tier]}.png`;
+                        }
+                        return null;
+                    };
+
+                    const rankIconUrl = getRankIcon(data.stats.elo);
+                    const rankHtml = rankIconUrl ? `<img src="${rankIconUrl}" alt="Rank Icon" style="height: 50px; display: block; margin: 0 auto 5px auto;">` : '';
+
                     // Constrói o HTML do modal dinamicamente
                     modalContainer.innerHTML = `
                         <div class="modal-header">
@@ -1264,7 +1222,11 @@
                                         <div class="accordion-inner">
                                             <p style="margin-bottom:1.5rem;"><strong>Principais Campeões:</strong> <span style="color:white;">${data.stats.mainChampions.join(', ')}</span></p>
                                             <div class="stat-grid">
-                                                <div class="stat-box"><small>Elo SoloQ</small><div id="stat-elo" style="font-size: 1rem; color: var(--red-primary);">${data.stats.elo || 'N/A'}</div></div>
+                                                <div class="stat-box">
+                                                    <small>Elo SoloQ</small>
+                                                    ${rankHtml}
+                                                    <div id="stat-elo" style="font-size: 1rem; color: var(--red-primary);">${data.stats.elo || 'N/A'}</div>
+                                                </div>
                                                 <div class="stat-box"><small>Win Rate</small><div id="stat-wr">${data.stats.winRate}</div></div>
                                                 <div class="stat-box"><small>Vitórias</small><div id="stat-wins">${data.stats.wins || 'N/A'}</div></div>
                                                 <div class="stat-box"><small>KDA (Médio)</small><div>${data.stats.kda}</div></div>
