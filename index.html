@@ -865,14 +865,17 @@
 
             // Função para buscar partidas
             async function fetchMatches() {
-                // 1. Renderiza a agenda manual (LOCAL_SCHEDULE)
-                // Como a API da Riot não fornece agenda futura via RGAPI, usamos os dados manuais.
-                renderMatches(LOCAL_SCHEDULE, true);
-
-                // 2. Remove mensagem de carregamento
-                loadingMsg.style.display = 'none';
-                
-                console.log("Riot API Key configurada:", RIOT_API_KEY);
+                try {
+                    // 1. Tenta buscar o arquivo gerado automaticamente pelo GitHub Actions
+                    const response = await fetch('data/matches.json');
+                    if (!response.ok) throw new Error('Arquivo automático não encontrado');
+                    const autoMatches = await response.json();
+                    renderMatches(autoMatches, true); // Usa true pois o JSON gerado seguirá o formato simplificado
+                } catch (error) {
+                    // 2. Fallback: Se não tiver automação, usa a agenda manual
+                    console.log("Usando agenda manual (Fallback).");
+                    renderMatches(LOCAL_SCHEDULE, true);
+                }
             }
 
             function formatGameName(slug) {
