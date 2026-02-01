@@ -1086,6 +1086,10 @@
             // Tenta carregar o arquivo JSON gerado pelo GitHub Actions com stats atualizados
             fetch('data/stats.json')
                 .then(res => res.json())
+                .then(res => {
+                    if (!res.ok) throw new Error('Arquivo de stats não encontrado');
+                    return res.json();
+                })
                 .then(newStats => {
                     // Atualiza o objeto playerData com os dados novos
                     Object.keys(newStats).forEach(playerKey => {
@@ -1096,6 +1100,7 @@
                     });
                 })
                 .catch(() => console.log("Usando estatísticas padrão (Manuais)."));
+                .catch((e) => console.log("Usando estatísticas padrão (Manuais). Motivo:", e.message));
 
             playerCards.forEach(card => {
                 card.addEventListener('click', () => {
