@@ -815,11 +815,6 @@
                 });
             }
 
-            // Configuração da API da Riot Games
-            // OBS: A chave RGAPI serve para dados de desenvolvimento (Histórico, Maestria).
-            // Ela não fornece "Agenda de Jogos" diretamente e bloqueia requisições via navegador (CORS).
-            const RIOT_API_KEY = 'RGAPI-753fab1b-8e68-4eea-8526-735af69f23f3';
-
             // --- CONFIGURAÇÃO AUTOMÁTICA DE LOGOS (GITHUB) ---
             // Cole aqui o link da pasta do GitHub que você achou, mas modificado para o jsDelivr.
             // Padrão: https://cdn.jsdelivr.net/gh/USUARIO/REPOSITORIO@main/PASTA/
@@ -865,15 +860,21 @@
             // Função para buscar partidas
             async function fetchMatches() {
                 try {
+                    // Adiciona timeout de 5 segundos para não travar em conexões lentas
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 5000);
+
                     // 1. Tenta buscar o arquivo gerado automaticamente pelo GitHub Actions
-                    const response = await fetch('data/matches.json');
-                    if (!response.ok) throw new Error('Arquivo automático não encontrado');
+                    const response = await fetch('data/matches.json', { signal: controller.signal });
+                    clearTimeout(timeoutId);
+
+                    if (!response.ok) throw new Error('Arquivo automático não encontrado ou erro de rede');
                     const autoMatches = await response.json();
-                    renderMatches(autoMatches, true); // Usa true pois o JSON gerado seguirá o formato simplificado
+                    renderMatches(autoMatches);
                 } catch (error) {
                     // 2. Fallback: Se não tiver automação, usa a agenda manual
-                    console.log("Usando agenda manual (Fallback).");
-                    renderMatches(LOCAL_SCHEDULE, true);
+                    console.warn("Usando agenda manual (Fallback). Motivo:", error.message);
+                    renderMatches(LOCAL_SCHEDULE);
                 }
             }
 
@@ -886,6 +887,7 @@
 
             function formatDate(dateString) {
                 const date = new Date(dateString);
+                if (isNaN(date.getTime())) return 'Data a confirmar';
                 const day = String(date.getDate()).padStart(2, '0');
                 const month = String(date.getMonth() + 1).padStart(2, '0');
                 const hours = String(date.getHours()).padStart(2, '0');
@@ -893,52 +895,45 @@
                 return `${day}/${month} - ${hours}:${minutes}`;
             }
 
-            function renderMatches(matches, isLocal = false) {
+            function renderMatches(matches) {
                 loadingMsg.style.display = 'none';
+                
+                // Limpa itens anteriores (exceto o loadingMsg que já foi ocultado)
+                const existingItems = scheduleList.querySelectorAll('.schedule-item');
+                existingItems.forEach(el => el.remove());
 
-                if (matches.length === 0 && !isLocal) {
-                    // Só mostra mensagem de vazio se não for a carga local e a API não retornar nada
-                    const hasItems = scheduleList.querySelectorAll('.schedule-item').length > 0;
-                    if (!hasItems) {
-                    scheduleList.innerHTML += '<p style="text-align:center; color:var(--text-gray);">Nenhum jogo agendado nos próximos dias.</p>';
-                    }
+                if (!matches || matches.length === 0) {
+                    scheduleList.insertAdjacentHTML('beforeend', '<p style="text-align:center; color:var(--text-gray);">Nenhum jogo agendado nos próximos dias.</p>');
                     return;
                 }
 
+                const fragment = document.createDocumentFragment();
+
                 matches.forEach(match => {
-                    let gameCategory, leagueName, matchDate, opponentName, opponentLogo, redLogo;
-
-                    if (isLocal) {
-                        // Lógica para dados Manuais
-                        gameCategory = match.game;
-                        leagueName = match.league;
-                        matchDate = formatDate(match.date);
-                        opponentName = match.opponent;
-                        opponentLogo = match.logo;
-                        // Tenta pegar a logo automática do GitHub baseada no nome
-                        opponentLogo = getAutoLogo(opponentName);
-                        redLogo = 'img/red.png'; // Logo da RED fixa
-                    } else {
-                        // Lógica para dados da API PandaScore
-                        gameCategory = formatGameName(match.videogame.slug);
-                        leagueName = match.league.name;
-                        matchDate = formatDate(match.begin_at);
+                    // Normalização dos dados
+                    const gameCategory = match.game || 'outros';
+                    const leagueName = match.league || 'Campeonato';
+                    const matchDate = formatDate(match.date);
+                    const opponentName = match.opponent || 'A Definir';
                     
-                        // Encontrar o oponente (que não é a RED Canids)
-                        const opponent = match.opponents.find(op => !op.opponent.name.toLowerCase().includes('red canids'))?.opponent;
-                        const redCanids = match.opponents.find(op => op.opponent.name.toLowerCase().includes('red canids'))?.opponent;
+                    // Prioriza a logo do JSON, se não tiver, usa a automática
+                    const opponentLogo = match.logo || getAutoLogo(opponentName);
+                    const redLogo = 'img/red.png';
 
-                        opponentName = opponent ? opponent.name : 'A Definir';
-                        opponentLogo = opponent ? opponent.image_url : 'img/logo.png';
-                        // Se a API não der a imagem, tenta achar no GitHub pelo nome
-                        opponentLogo = opponent && opponent.image_url ? opponent.image_url : getAutoLogo(opponentName);
-                        redLogo = redCanids ? redCanids.image_url : 'img/red.png';
+                    const div = document.createElement('div');
+                    div.className = 'schedule-item';
+                    div.setAttribute('data-category', gameCategory);
+
+                    // Verifica filtro atual para já nascer visível ou oculto (otimização visual)
+                    const activeTab = document.querySelector('.schedule-tabs button.active');
+                    const currentFilter = activeTab ? activeTab.getAttribute('data-filter') : 'all';
+                    if (currentFilter !== 'all' && currentFilter !== gameCategory) {
+                        div.style.display = 'none';
                     }
 
-                    const html = `
-                        <div class="schedule-item" data-category="${gameCategory}">
+                    div.innerHTML = `
                             <div class="team">
-                                <img src="${redLogo || 'img/red.png'}" alt="RED Canids" onerror="this.src='img/logo.png'">
+                                <img src="${redLogo}" alt="RED Canids" loading="lazy" onerror="this.src='img/logo.png'">
                                 <span>RED</span>
                             </div>
                             <div class="match-info">
@@ -948,12 +943,13 @@
                             </div>
                             <div class="team">
                                 <span>${opponentName}</span>
-                                <img src="${opponentLogo || 'img/logo.png'}" alt="${opponentName}" onerror="this.src='img/logo.png'">
+                                <img src="${opponentLogo}" alt="${opponentName}" loading="lazy" onerror="this.onerror=null;this.src='img/logo.png'">
                             </div>
-                        </div>
                     `;
-                    scheduleList.insertAdjacentHTML('beforeend', html);
+                    fragment.appendChild(div);
                 });
+                
+                scheduleList.appendChild(fragment);
             }
 
             // Iniciar busca
