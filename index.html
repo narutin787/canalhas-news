@@ -931,8 +931,13 @@
                     const opponentName = match.opponent || 'A Definir';
                     
                     // Prioriza a logo do JSON, se não tiver, usa a automática
-                    const opponentLogo = match.logo || getAutoLogo(opponentName);
+                    // Se for "A Definir", não exibe logo
+                    const opponentLogo = (opponentName === 'A Definir') ? null : (match.logo || getAutoLogo(opponentName));
                     const redLogo = 'img/red.png';
+                    
+                    const opponentImgHtml = opponentLogo 
+                        ? `<img src="${opponentLogo}" alt="${opponentName}" loading="lazy" onerror="this.onerror=null;this.src='img/logo.png'">`
+                        : '';
 
                     const div = document.createElement('div');
                     div.className = 'schedule-item';
@@ -957,7 +962,7 @@
                             </div>
                             <div class="team">
                                 <span>${opponentName}</span>
-                                <img src="${opponentLogo}" alt="${opponentName}" loading="lazy" onerror="this.onerror=null;this.src='img/logo.png'">
+                                ${opponentImgHtml}
                             </div>
                     `;
                     fragment.appendChild(div);
