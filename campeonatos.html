@@ -111,61 +111,6 @@
             transition: 0.3s;
         }
 
-        @media (max-width: 768px) {
-            .mobile-menu-btn {
-                display: flex;
-                margin-left: auto;
-            }
-
-            .logo {
-                position: static;
-                transform: none;
-                width: auto;
-                justify-content: flex-start;
-            }
-
-            .logo-text {
-                font-size: 1.5rem;
-            }
-
-            .logo img {
-                height: 35px;
-            }
-
-            nav {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background-color: rgba(15, 15, 15, 0.98);
-                padding: 1rem 0;
-                border-bottom: 1px solid #333;
-                flex-direction: column;
-                align-items: center;
-            }
-
-            nav.active {
-                display: flex;
-            }
-
-            nav ul {
-                flex-direction: column;
-                gap: 1.5rem;
-                width: 100%;
-                text-align: center;
-            }
-
-            .page-wrapper {
-                grid-template-columns: 1fr;
-                padding: 1rem;
-            }
-
-            .sidebar {
-                display: none;
-            }
-        }
-
         /* Page Layout */
         .page-wrapper {
             padding: 2rem;
@@ -521,6 +466,77 @@
             padding-top: 1.5rem;
             border-top: 1px solid #333;
             font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: flex;
+                margin-left: auto;
+            }
+
+            .logo {
+                position: static;
+                transform: none;
+                width: auto;
+                justify-content: flex-start;
+            }
+
+            .logo-text {
+                font-size: 1.5rem;
+            }
+
+            .logo img {
+                height: 35px;
+            }
+
+            nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: rgba(15, 15, 15, 0.98);
+                padding: 1rem 0;
+                border-bottom: 1px solid #333;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav.active {
+                display: flex;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 1.5rem;
+                width: 100%;
+                text-align: center;
+            }
+
+            .page-wrapper {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            /* Mobile Championship Cards */
+            .champ-header {
+                padding: 1.2rem;
+                gap: 1rem;
+            }
+
+            .champ-name {
+                font-size: 1.2rem;
+            }
+
+            .champ-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
         }
     </style>
 </head>
