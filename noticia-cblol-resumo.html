@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RED alterna vitórias e derrota | Canalhas News</title>
+    <link rel="shortcut icon" href="img/logo.png" type="image/png">
+    <link rel="icon" href="img/logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --red-primary: #E30613; --red-dark: #8a0000; --black-bg: #0f0f0f; --card-bg: #181818; --text-light: #ffffff; --text-gray: #b0b0b0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+        body { background-color: var(--black-bg); color: var(--text-light); }
+        header { background-color: rgba(15, 15, 15, 0.95); backdrop-filter: blur(10px); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1000; border-bottom: 1px solid #333; }
+        .logo { display: flex; align-items: center; gap: 15px; text-decoration: none; color: var(--text-light); }
+        .logo img { height: 50px; width: auto; filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3)); }
+        .logo-text { font-family: 'Oswald', sans-serif; font-size: 2.5rem; font-weight: normal; text-transform: uppercase; letter-spacing: -0.5px; line-height: 1; }
+        .logo-text span { font-family: 'Oswald', sans-serif; color: var(--red-primary); font-size: 1.1em; font-weight: normal; }
+        nav ul { display: flex; list-style: none; gap: 20px; }
+        nav a { color: var(--text-light); text-decoration: none; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; transition: color 0.3s ease; }
+        nav a:hover { color: var(--red-primary); }
+        .mobile-menu-btn { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; }
+        .mobile-menu-btn span { width: 25px; height: 3px; background-color: var(--text-light); transition: 0.3s; }
+        .page-wrapper { padding: 2rem; display: grid; grid-template-columns: 80px 1fr; gap: 2rem; }
+        .main-content { max-width: 900px; justify-self: center; width: 100%; }
+        .full-article { background-color: var(--card-bg); padding: 2rem; border-radius: 4px; }
+        .article-header { margin-bottom: 2rem; }
+        .article-tag { color: var(--red-primary); font-weight: 800; text-transform: uppercase; font-size: 0.9rem; display: block; margin-bottom: 1rem; }
+        .article-title { font-size: 2.5rem; font-weight: 900; margin-bottom: 1rem; line-height: 1.2; color: var(--text-light); }
+        .article-meta { color: var(--text-gray); font-size: 0.9rem; border-bottom: 1px solid #333; padding-bottom: 1rem; margin-bottom: 2rem; }
+        .article-meta strong { color: var(--text-light); }
+        .article-image { width: 100%; height: 400px; background-size: cover; background-position: center; margin-bottom: 2rem; border-radius: 4px; }
+        .article-body p { font-size: 1.1rem; line-height: 1.8; color: #ddd; margin-bottom: 1.5rem; }
+        .article-lead { font-size: 1.25rem; line-height: 1.6; color: #fff; font-weight: 500; margin-bottom: 2rem; border-left: 4px solid var(--red-primary); padding-left: 1rem; }
+        .share-section { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #333; }
+        .share-btn { background: #333; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: 700; transition: 0.3s; margin-right: 10px; text-transform: uppercase; font-size: 0.8rem; }
+        .share-btn:hover { background: var(--red-primary); }
+        .sidebar { order: -1; }
+        .sidebar-nav { display: flex; flex-direction: column; align-items: center; gap: 2rem; position: sticky; top: 100px; }
+        .nav-item { color: var(--text-gray); transition: color 0.3s ease; display: flex; flex-direction: column; align-items: center; text-decoration: none; font-size: 0.7rem; font-weight: 600; gap: 5px; text-align: center; }
+        .nav-item:hover { color: var(--red-primary); }
+        .nav-item svg { width: 24px; height: 24px; fill: currentColor; }
+        footer { background-color: #000; padding: 3rem 2rem 1rem; margin-top: 4rem; color: var(--text-gray); border-top: 3px solid var(--red-primary); }
+        .footer-bottom { text-align: center; padding-top: 1.5rem; border-top: 1px solid #333; font-size: 0.8rem; }
+        @media (max-width: 768px) { .mobile-menu-btn { display: flex; margin-left: auto; } .logo { position: static; transform: none; width: auto; justify-content: flex-start; } .logo-text { font-size: 1.5rem; } .logo img { height: 35px; } nav { display: none; position: absolute; top: 100%; left: 0; width: 100%; background-color: rgba(15, 15, 15, 0.98); padding: 1rem 0; border-bottom: 1px solid #333; flex-direction: column; align-items: center; } nav.active { display: flex; } nav ul { flex-direction: column; gap: 1.5rem; width: 100%; text-align: center; } .page-wrapper { grid-template-columns: 1fr; padding: 1rem; } .sidebar { display: none; } .article-title { font-size: 1.8rem; } .full-article { padding: 1.5rem; } .article-image { height: 200px; } }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo"><img src="img/logo.png" alt="Canalhas News Logo"><div class="logo-text">Canalhas <span>News</span></div></a>
+        <button class="mobile-menu-btn" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+        <nav><ul><li><a href="index.html">Início</a></li><li><a href="index.html">Notícias</a></li><li><a href="times.html">Times</a></li><li><a href="sobre.html">Sobre</a></li><li><a href="contato.html">Contato</a></li><li><a href="index.html#schedule">Calendário</a></li><li><a href="campeonatos.html">Campeonatos</a></li></ul></nav>
+    </header>
+    <div class="page-wrapper">
+        <main class="main-content">
+            <article class="full-article">
+                <header class="article-header">
+                    <span class="article-tag">League of Legends</span>
+                    <h1 class="article-title">RED alterna vitórias e derrota em fim de semana intenso na Copa CBLOL</h1>
+                    <div class="article-meta">Por <strong>Redação Canalhas</strong> | 02/02/2026 às 10:00</div>
+                </header>
+                <div class="article-image" style="background-image: url('img/img-noticias/red-resumo.jpg');"></div>
+                <div class="article-body">
+                    <div class="article-lead">A RED iniciou o fim de semana da Copa CBLOL com uma atuação convincente ao vencer a FURIA, demonstrando solidez e bom controle de jogo.</div>
+                    <p>No domingo, a equipe voltou ao servidor contra a LOUD e chegou a apresentar um desempenho dominante, mas acabou sofrendo a virada após subestimar o adversário, mesmo mantendo ampla vantagem no número de abates, com placar final de 31 a 17.</p>
+                    <p>Na sequência, a RED enfrentou sua maior rival, a paiN Gaming, em um confronto marcado pelo domínio absoluto. A equipe abriu um placar contundente de 31 a 9, em uma partida que ficou marcada pelo pentakill de Rabelo utilizando a Yunara, seu segundo pentakill contra a paiN na carreira.</p>
+                    <p>A jogada entrou para os destaques da rodada e reforçou o bom momento individual do jogador na competição.</p>
+                </div>
+                <div class="share-section">
+                    <p style="color:var(--text-gray); margin-bottom:1rem; font-weight:700; text-transform:uppercase;">Compartilhe:</p>
+                    <button class="share-btn">Twitter / X</button>
+                    <button class="share-btn">WhatsApp</button>
+                </div>
+            </article>
+        </main>
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item" title="Início"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>Início</span></a>
+                <a href="index.html#news" class="nav-item" title="Notícias"><svg viewBox="0 0 24 24"><path d="M20 3H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h3l-1 1v2h12v-2l-1-1h3c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 13H4V5h16v11zM6 8h12v2H6zm0 4h12v2H6z"/></svg><span>Notícias</span></a>
+                <a href="index.html#schedule" class="nav-item" title="Agenda"><svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg><span>Agenda</span></a>
+                <a href="times.html" class="nav-item" title="Times"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg><span>Times</span></a>
+                <a href="campeonatos.html" class="nav-item" title="Campeonatos"><svg viewBox="0 0 24 24"><path d="M20.2 2H3.8C2.8 2 2 2.8 2 3.8V6c0 3.1 2.3 5.7 5.3 6 1.3 2.3 3.6 3.9 6.2 4v2H9v2h6v-2h-4.5c2.6-.1 4.9-1.7 6.2-4 3-.3 5.3-2.9 5.3-6V3.8c0-1-.8-1.8-1.8-1.8zM4 6V4h3v3.6C5.1 7.2 4 6.2 4 6zm13 1.6V4h3v2c0 1.8-1.1 3.2-3 3.6z"/></svg><span>Camp.</span></a>
+            </nav>
+        </aside>
+    </div>
+    <footer><div class="footer-bottom"><p>&copy; 2024 Canalhas News - Fã Site da Red Canids Kalunga</p></div></footer>
+    <script>document.addEventListener('DOMContentLoaded', function () { const mobileBtn = document.querySelector('.mobile-menu-btn'); const nav = document.querySelector('nav'); if(mobileBtn) { mobileBtn.addEventListener('click', () => { nav.classList.toggle('active'); }); } });</script>
+</body>
+</html>
