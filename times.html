@@ -870,6 +870,10 @@
                 mobileBtn.addEventListener('click', () => {
                     nav.classList.toggle('active');
                 });
+                // Fecha o menu ao clicar em links
+                nav.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => nav.classList.remove('active'));
+                });
             }
 
             function filterPlayers() {
@@ -947,9 +951,9 @@
                     ],
                     stats: {
                         mainChampions: ['K\'Sante', 'Renekton', 'Jax'],
-                        kda: '4.1',
-                        winRate: '68%',
-                        elo: 'CHALLENGER 1.200 PDL',
+                        kda: '2.1',
+                        winRate: '78%',
+                        elo: 'DIAMANTE 4 77 PDL',
                         wins: '142',
                         goldPerMinute: '421',
                         damageShare: '24.5%',
@@ -966,7 +970,7 @@
                         { opponent: 'paiN Gaming', result: 'V 3-0', date: '06/09/25', championship: 'LTA South' }
                     ],
                     championships: [{ name: 'CBLOL 2026 - Etapa 1', placement: 'Em andamento' }],
-                    stats: { mainChampions: ['Viego', 'Lee Sin', 'Sejuani'], kda: '5.2', winRate: '70%', elo: 'CHALLENGER 980 PDL', wins: '98', goldPerMinute: '380', damageShare: '18%', pentakills: '0' }
+                    stats: { mainChampions: ['Viego', 'Lee Sin', 'Sejuani'], kda: '3.1', winRate: '60%', elo: 'GRÃO MESTRE 835 PDL', wins: '98', goldPerMinute: '380', damageShare: '18%', pentakills: '0' }
                 },
                 'Kaze': {
                     fullName: 'Bruno Kaze',
@@ -977,7 +981,7 @@
                         { opponent: 'LOUD', result: 'V 3-2', date: '05/09/25', championship: 'LTA South' }
                     ],
                     championships: [{ name: 'CBLOL Academy 2025', placement: '1º 🥇' }],
-                    stats: { mainChampions: ['Azir', 'Ahri', 'Sylas'], kda: '4.8', winRate: '65%', elo: 'CHALLENGER 1.100 PDL', wins: '120', goldPerMinute: '410', damageShare: '28%', pentakills: '2' }
+                    stats: { mainChampions: ['Azir', 'Ahri', 'Sylas'], kda: '2.4', winRate: '60%', elo: 'GRÃO MESTRE 842 PDL', wins: '120', goldPerMinute: '410', damageShare: '28%', pentakills: '2' }
                 },
                 'Rabelo': {
                     fullName: 'Matheus Rabelo',
@@ -986,7 +990,7 @@
                     pastTeams: ['INTZ'],
                     matches: [],
                     championships: [],
-                    stats: { mainChampions: ['Kai\'Sa', 'Xayah', 'Zeri'], kda: '6.0', winRate: '62%', elo: 'CHALLENGER 850 PDL', wins: '85', goldPerMinute: '450', damageShare: '30%', pentakills: '1' }
+                    stats: { mainChampions: ['Kai\'Sa', 'Xayah', 'Zeri'], kda: '2.2', winRate: '57%', elo: 'MESTRE 549 PDL', wins: '85', goldPerMinute: '450', damageShare: '30%', pentakills: '1' }
                 },
                 'Frosty': {
                     fullName: 'Lucas Frosty',
@@ -995,7 +999,7 @@
                     pastTeams: ['Liberty'],
                     matches: [],
                     championships: [],
-                    stats: { mainChampions: ['Nautilus', 'Rakan', 'Lulu'], kda: '3.5', winRate: '62%', elo: 'GM 600 PDL', wins: '70', goldPerMinute: '250', damageShare: '8%', pentakills: '0' }
+                    stats: { mainChampions: ['Nautilus', 'Rakan', 'Lulu'], kda: '2.8', winRate: '67%', elo: 'MESTRE 592 PDL', wins: '70', goldPerMinute: '250', damageShare: '8%', pentakills: '0' }
                 },
                 'Tockers': {
                     fullName: 'Gabriel Claumann',
@@ -1140,6 +1144,7 @@
                         const rankMap = {
                             'challenger': 'challenger',
                             'grandmaster': 'grandmaster', 'gm': 'grandmaster',
+                            'grão': 'grandmaster', // Adicionado para suportar "Grão Mestre" em pt-br
                             'master': 'master',
                             'diamond': 'diamond',
                             'emerald': 'emerald',

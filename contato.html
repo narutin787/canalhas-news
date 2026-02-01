@@ -385,6 +385,10 @@
                 mobileBtn.addEventListener('click', () => {
                     nav.classList.toggle('active');
                 });
+                // Fecha o menu ao clicar em links
+                nav.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => nav.classList.remove('active'));
+                });
             }
         });
     </script>

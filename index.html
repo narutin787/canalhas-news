@@ -664,6 +664,19 @@
             <section id="news">
                 <h2 class="section-title">Destaques da Matilha</h2>
                 <div class="news-grid">
+                    <!-- Card Novo: Playoffs -->
+                    <article class="news-card">
+                        <div class="image-wrapper">
+                            <span class="news-tag">League of Legends</span>
+                            <div class="news-image" style="background-image: url('img/img-noticias/noticias-semana%203.jpg');"></div>
+                        </div>
+                        <div class="news-content">
+                            <h3 class="news-title"><a href="noticia-cblol-semana3.html" class="card-link">Matilha garante vaga nos playoffs mesmo com revés para a líder</a></h3>
+                            <p class="news-excerpt">A RED Canids Kalunga teve uma semana de resultados contrastantes na fase regular da Copa CBLOL 2026.</p>
+                            <span class="read-more">Ler matéria &rarr;</span>
+                        </div>
+                    </article>
+
                     <!-- Card 1: LoL -->
                     <article class="news-card">
                         <div class="image-wrapper">
@@ -813,6 +826,13 @@
                 mobileBtn.addEventListener('click', () => {
                     nav.classList.toggle('active');
                 });
+                
+                // Fecha o menu ao clicar em qualquer link
+                nav.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        nav.classList.remove('active');
+                    });
+                });
             }
 
             // --- CONFIGURAÇÃO AUTOMÁTICA DE LOGOS (GITHUB) ---
@@ -845,15 +865,9 @@
             const LOCAL_SCHEDULE = [
                 {
                     game: 'lol',
-                    league: 'CBLOL 2026 - Etapa 1',
-                    date: '2026-02-01T13:00:00',
-                    opponent: 'LOUD'
-                },
-                {
-                    game: 'cs2',
-                    league: 'IEM Katowice 2026',
-                    date: '2026-02-03T15:30:00',
-                    opponent: 'FURIA'
+                    league: 'CBLOL 2026 - Upper Bracket (MD3)',
+                    date: '2026-02-08T16:00:00',
+                    opponent: 'A Definir'
                 }
             ];
 

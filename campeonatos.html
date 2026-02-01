@@ -618,50 +618,50 @@
                                     <tr>
                                         <td class="rank">1</td>
                                         <td><div class="team-cell"><img src="img/los.png" class="team-logo-mini"> LOS</div></td>
-                                        <td>5 - 1</td>
-                                        <td>83%</td>
-                                    </tr>
-                                    <tr class="highlight-row">
-                                        <td class="rank">2</td>
-                                        <td><div class="team-cell"><img src="img/red.png" class="team-logo-mini"> RED Canids</div></td>
-                                        <td>5 - 1</td>
-                                        <td>83%</td>
+                                        <td>6 - 1</td>
+                                        <td>86%</td>
                                     </tr>
                                     <tr>
-                                        <td class="rank">3</td>
+                                        <td class="rank">2</td>
                                         <td><div class="team-cell"><img src="img/logo furia.png" class="team-logo-mini"> FURIA</div></td>
-                                        <td>4 - 2</td>
-                                        <td>67%</td>
+                                        <td>5 - 2</td>
+                                        <td>71%</td>
+                                    </tr>
+                                    <tr class="highlight-row">
+                                        <td class="rank">3</td>
+                                        <td><div class="team-cell"><img src="img/red.png" class="team-logo-mini"> RED Canids</div></td>
+                                        <td>5 - 2</td>
+                                        <td>71%</td>
                                     </tr>
                                      <tr>
                                         <td class="rank">4</td>
                                         <td><div class="team-cell"><img src="img/logo vk.png" class="team-logo-mini"> Vivo Keyd Stars</div></td>
-                                        <td>3 - 3</td>
-                                        <td>50%</td>
+                                        <td>3 - 4</td>
+                                        <td>43%</td>
                                     </tr>
                                     <tr>
                                         <td class="rank">5</td>
                                         <td><div class="team-cell"><img src="img/loud.png" class="team-logo-mini"> LOUD</div></td>
-                                        <td>3 - 3</td>
-                                        <td>50%</td>
+                                        <td>3 - 4</td>
+                                        <td>43%</td>
                                     </tr>
                                     <tr>
                                         <td class="rank">6</td>
-                                        <td><div class="team-cell"><img src="img/logo leviatan.png" class="team-logo-mini"> Leviatan</div></td>
-                                        <td>2 - 4</td>
-                                        <td>33%</td>
+                                        <td><div class="team-cell"><img src="img/fluxow7m.png" class="team-logo-mini"> Fluxo W7M</div></td>
+                                        <td>2 - 5</td>
+                                        <td>29%</td>
                                     </tr>
                                     <tr>
                                         <td class="rank">7</td>
-                                        <td><div class="team-cell"><img src="img/fluxow7m.png" class="team-logo-mini"> Fluxo W7M</div></td>
-                                        <td>1 - 5</td>
-                                        <td>17%</td>
+                                        <td><div class="team-cell"><img src="img/logo pain.png" class="team-logo-mini"> paiN Gaming</div></td>
+                                        <td>2 - 5</td>
+                                        <td>29%</td>
                                     </tr>
                                     <tr>
                                         <td class="rank">8</td>
-                                        <td><div class="team-cell"><img src="img/logo pain.png" class="team-logo-mini"> paiN Gaming</div></td>
-                                        <td>1 - 5</td>
-                                        <td>17%</td>
+                                        <td><div class="team-cell"><img src="img/logo leviatan.png" class="team-logo-mini"> Leviatan</div></td>
+                                        <td>2 - 5</td>
+                                        <td>29%</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -951,6 +951,10 @@
             if(mobileBtn) {
                 mobileBtn.addEventListener('click', () => {
                     nav.classList.toggle('active');
+                });
+                // Fecha o menu ao clicar em links
+                nav.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => nav.classList.remove('active'));
                 });
             }
 
