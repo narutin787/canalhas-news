@@ -321,6 +321,13 @@
                 </article>
             </div>
 
+            <!-- Seção Automática -->
+            <h2 class="section-title" style="margin-top: 4rem; font-size: 1.8rem;">Giro pela Web</h2>
+            <p style="color: var(--text-gray); margin-bottom: 2rem;">As últimas da RED em outros portais:</p>
+            <div class="news-grid" id="external-news-grid">
+                <!-- Preenchido via JS -->
+            </div>
+
             <div class="pagination">
                 <button class="page-btn active">1</button>
                 <button class="page-btn">2</button>
@@ -349,6 +356,37 @@
             const mobileBtn = document.querySelector('.mobile-menu-btn');
             const nav = document.querySelector('nav');
             if(mobileBtn) { mobileBtn.addEventListener('click', () => { nav.classList.toggle('active'); }); }
+
+            // Carregar notícias externas
+            fetch('data/news_external.json')
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById('external-news-grid');
+                    if(data && data.length > 0) {
+                        data.forEach(item => {
+                            const date = new Date(item.date).toLocaleDateString('pt-BR');
+                            const html = `
+                                <article class="news-card" style="border-left: 3px solid #333;">
+                                    <div class="news-content">
+                                        <span style="font-size: 0.7rem; color: var(--red-primary); text-transform: uppercase; font-weight: 700;">${item.source}</span>
+                                        <h3 class="news-title" style="font-size: 1rem; margin-top: 5px;">
+                                            <a href="${item.link}" target="_blank" class="card-link">${item.title}</a>
+                                        </h3>
+                                        <p class="news-excerpt" style="font-size: 0.8rem;">Publicado em: ${date}</p>
+                                        <span class="read-more" style="font-size: 0.8rem;">Ler no site original &rarr;</span>
+                                    </div>
+                                </article>
+                            `;
+                            container.insertAdjacentHTML('beforeend', html);
+                        });
+                    } else {
+                        container.innerHTML = '<p style="color: var(--text-gray);">Nenhuma notícia externa encontrada no momento.</p>';
+                    }
+                })
+                .catch(err => {
+                    console.log('Ainda não há notícias externas geradas.');
+                    document.getElementById('external-news-grid').style.display = 'none';
+                });
         });
     </script>
 </body>
