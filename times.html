@@ -929,6 +929,50 @@
             const playerCards = document.querySelectorAll('.player-card');
             const modalContainer = document.getElementById('modal-container');
 
+            // Função para pegar o ícone do Elo
+            const getRankIcon = (eloString, game) => {
+                if (!eloString || eloString === 'N/A') return null;
+                const tier = eloString.split(' ')[0].toLowerCase();
+
+                // LoL Ranks
+                if (game === 'lol') {
+                    const lolRankMap = {
+                        'challenger': 'challenger', 'desafiante': 'challenger',
+                        'grandmaster': 'grandmaster', 'gm': 'grandmaster', 'grão-mestre': 'grandmaster', 'grão': 'grandmaster',
+                        'master': 'master', 'mestre': 'master',
+                        'diamond': 'diamond', 'diamante': 'diamond',
+                        'emerald': 'emerald', 'esmeralda': 'emerald',
+                        'platinum': 'platinum', 'platina': 'platinum',
+                        'gold': 'gold', 'ouro': 'gold',
+                        'silver': 'silver', 'prata': 'prata',
+                        'bronze': 'bronze',
+                        'iron': 'iron', 'ferro': 'iron'
+                    };
+                    if (lolRankMap[tier]) {
+                        return `https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-shared-components/global/default/images/${lolRankMap[tier]}.png`;
+                    }
+                }
+                // Valorant Ranks
+                else if (game === 'valorant') {
+                    const valRankMap = {
+                        'radiant': '27', 'radiante': '27',
+                        'immortal': '24', 'imortal': '24',
+                        'ascendant': '21', 'ascendente': '21',
+                        'diamond': '18', 'diamante': '18',
+                        'platinum': '15', 'platina': '15',
+                        'gold': '12', 'ouro': '12',
+                        'silver': '9', 'prata': '9',
+                        'bronze': '6',
+                        'iron': '3', 'ferro': '3'
+                    };
+                    if (valRankMap[tier]) {
+                        return `https://trackercdn.com/cdn/tracker.gg/valorant/images/ranks/rank-${valRankMap[tier]}.png`;
+                    }
+                }
+                
+                return null; // No icon for CS2 or other games
+            };
+
             // BANCO DE DADOS DOS JOGADORES (MODELO)
             const playerData = {
                 'fNb': {
@@ -937,17 +981,21 @@
                     bio: 'Top laner brasileiro conhecido por sua agressividade e vasto repertório de campeões. fNb iniciou sua carreira em 2017 e rapidamente se destacou no cenário nacional, passando por equipes como ProGaming e Santos antes de se juntar à RED Canids em 2021, onde se tornou uma peça fundamental da equipe.',
                     pastTeams: ['ProGaming Esports', 'Santos e-Sports', 'RED Canids'],
                     matches: [
-                        { opponent: 'LOUD', result: 'V 3-2', date: '05/09/25', championship: 'LTA South' },
-                        { opponent: 'paiN Gaming', result: 'V 3-0', date: '06/09/25', championship: 'LTA South' },
-                        { opponent: 'Vivo Keyd Stars', result: 'D 0-3', date: '07/09/25', championship: 'LTA South' },
-                        { opponent: 'Shopify Rebellion', result: 'V 3-2', date: '14/09/25', championship: 'LTA Finals' },
-                        { opponent: '100 Thieves', result: 'D 0-3', date: '21/09/25', championship: 'LTA Finals' },
+                        { opponent: 'LOS', result: 'D 0-1', date: '02/02/26', championship: 'Copa CBLOL' },
+                        { opponent: 'paiN Gaming', result: 'V 1-0', date: '01/02/26', championship: 'Copa CBLOL' },
+                        { opponent: 'LOUD', result: 'D 0-1', date: '01/02/26', championship: 'Copa CBLOL' },
+                        { opponent: 'Vivo Keyd Stars', result: 'V 1-0', date: '31/01/26', championship: 'Copa CBLOL' },
+                        { opponent: 'FURIA', result: 'V 1-0', date: '31/01/26', championship: 'Copa CBLOL' },
                     ],
                     championships: [
+                        { name: 'Copa CBLOL 2026', placement: 'Playoffs' },
+                        { name: 'LTA 2025 Championship', placement: '4º' },
+                        { name: 'LTA South 2025 - Split 3', placement: '2º 🥈' },
+                        { name: 'LTA South 2025 - Split 2', placement: '5º-6º' },
+                        { name: 'LTA South 2025 - Split 1', placement: '5º-6º' },
+                        { name: 'CBLOL 2024 - Etapa 1', placement: '3º 🥉' },
                         { name: 'CBLOL 2022 - Etapa 1', placement: '1º 🥇' },
                         { name: 'MSI 2022', placement: '9º-10º' },
-                        { name: 'CBLOL 2024 - Etapa 1', placement: '3º 🥉' },
-                        { name: 'LTA 2025 Championship', placement: '4º' },
                     ],
                     stats: {
                         mainChampions: ['K\'Sante', 'Renekton', 'Jax'],
@@ -966,10 +1014,16 @@
                     bio: 'Caçador talentoso que trouxe uma nova dinâmica para a selva da RED. Conhecido por seu pathing inteligente e ganks agressivos no early game.',
                     pastTeams: ['KaBuM! Esports', 'Flamengo'],
                     matches: [
-                        { opponent: 'LOUD', result: 'V 3-2', date: '05/09/25', championship: 'LTA South' },
-                        { opponent: 'paiN Gaming', result: 'V 3-0', date: '06/09/25', championship: 'LTA South' }
+                        { opponent: 'LOS', result: 'D 0-1', date: '02/02/26', championship: 'Copa CBLOL' },
+                        { opponent: 'paiN Gaming', result: 'V 1-0', date: '01/02/26', championship: 'Copa CBLOL' },
+                        { opponent: 'LOUD', result: 'D 0-1', date: '01/02/26', championship: 'Copa CBLOL' },
                     ],
-                    championships: [{ name: 'CBLOL 2026 - Etapa 1', placement: 'Em andamento' }],
+                    championships: [
+                        { name: 'Copa CBLOL 2026', placement: 'Playoffs' },
+                        { name: 'LTA South 2025 - Split 3', placement: '2º 🥈' },
+                        { name: 'LTA South 2025 - Split 2', placement: '5º-6º' },
+                        { name: 'LTA South 2025 - Split 1', placement: '5º-6º' },
+                    ],
                     stats: { mainChampions: ['Viego', 'Lee Sin', 'Sejuani'], kda: '3.1', winRate: '60%', elo: 'GRÃO MESTRE 835 PDL', wins: '98', goldPerMinute: '380', damageShare: '18%', pentakills: '0' }
                 },
                 'Kaze': {
@@ -978,27 +1032,53 @@
                     bio: 'Mid laner prodígio, Kaze é a aposta da RED para dominar a rota do meio. Mecanicamente superdotado, ele costuma brilhar com magos de controle e assassinos.',
                     pastTeams: ['RED Academy'],
                     matches: [
-                        { opponent: 'LOUD', result: 'V 3-2', date: '05/09/25', championship: 'LTA South' }
+                        { opponent: 'LOS', result: 'D 0-1', date: '02/02/26', championship: 'Copa CBLOL' },
+                        { opponent: 'paiN Gaming', result: 'V 1-0', date: '01/02/26', championship: 'Copa CBLOL' },
+                        { opponent: 'LOUD', result: 'D 0-1', date: '01/02/26', championship: 'Copa CBLOL' },
                     ],
-                    championships: [{ name: 'CBLOL Academy 2025', placement: '1º 🥇' }],
+                    championships: [
+                        { name: 'Copa CBLOL 2026', placement: 'Playoffs' },
+                        { name: 'CBLOL Academy 2025', placement: '1º 🥇' }
+                    ],
                     stats: { mainChampions: ['Azir', 'Ahri', 'Sylas'], kda: '2.4', winRate: '60%', elo: 'GRÃO MESTRE 842 PDL', wins: '120', goldPerMinute: '410', damageShare: '28%', pentakills: '2' }
                 },
                 'Rabelo': {
                     fullName: 'Matheus Rabelo',
                     age: '20 anos',
-                    bio: 'Atirador consistente e posicionado. Rabelo é a garantia de dano no late game para a matilha, sempre jogando no limite para maximizar seu DPS.',
-                    pastTeams: ['INTZ'],
-                    matches: [],
-                    championships: [],
-                    stats: { mainChampions: ['Kai\'Sa', 'Xayah', 'Zeri'], kda: '2.2', winRate: '57%', elo: 'MESTRE 549 PDL', wins: '85', goldPerMinute: '450', damageShare: '30%', pentakills: '1' }
+                    bio: 'Atirador consistente e posicionado. Rabelo é a garantia de dano no late game para a matilha, sempre jogando no limite para maximizar seu DPS. Famoso por seus pentakills em momentos decisivos.',
+                    pastTeams: ['INTZ', 'RED Academy'],
+                    matches: [
+                        { opponent: 'paiN Gaming', result: 'V 1-0', date: '01/02/26', championship: 'Copa CBLOL' },
+                        { opponent: 'LOUD', result: 'D 0-1', date: '01/02/26', championship: 'Copa CBLOL' },
+                        { opponent: 'FURIA', result: 'V 1-0', date: '31/01/26', championship: 'Copa CBLOL' },
+                        { opponent: 'Vivo Keyd Stars', result: 'V 1-0', date: '31/01/26', championship: 'Copa CBLOL' },
+                        { opponent: 'LOS', result: 'D 0-1', date: '02/02/26', championship: 'Copa CBLOL' },
+                    ],
+                    championships: [
+                        { name: 'Copa CBLOL 2026', placement: 'Playoffs' },
+                        { name: 'LTA South 2025 - Split 3', placement: '2º 🥈' },
+                        { name: 'LTA South 2025 - Split 2', placement: '5º-6º' },
+                        { name: 'LTA South 2025 - Split 1', placement: '5º-6º' },
+                        { name: 'CBLOL Academy 2024 - Etapa 2', placement: '1º 🥇' },
+                    ],
+                    stats: { mainChampions: ['Kai\'Sa', 'Xayah', 'Zeri', 'Yunara'], kda: '2.9', winRate: '65%', elo: 'MESTRE 549 PDL', wins: '85', goldPerMinute: '450', damageShare: '30%', pentakills: '2' }
                 },
                 'Frosty': {
                     fullName: 'Lucas Frosty',
                     age: '22 anos',
                     bio: 'Suporte cerebral e principal shotcaller da bot lane. Frosty é especialista em campeões de engage e proteção, garantindo que Rabelo brilhe.',
                     pastTeams: ['Liberty'],
-                    matches: [],
-                    championships: [],
+                    matches: [
+                        { opponent: 'paiN Gaming', result: 'V 1-0', date: '01/02/26', championship: 'Copa CBLOL' },
+                        { opponent: 'LOUD', result: 'D 0-1', date: '01/02/26', championship: 'Copa CBLOL' },
+                        { opponent: 'FURIA', result: 'V 1-0', date: '31/01/26', championship: 'Copa CBLOL' },
+                    ],
+                    championships: [
+                        { name: 'Copa CBLOL 2026', placement: 'Playoffs' },
+                        { name: 'LTA South 2025 - Split 3', placement: '2º 🥈' },
+                        { name: 'LTA South 2025 - Split 2', placement: '5º-6º' },
+                        { name: 'LTA South 2025 - Split 1', placement: '5º-6º' },
+                    ],
                     stats: { mainChampions: ['Nautilus', 'Rakan', 'Lulu'], kda: '2.8', winRate: '67%', elo: 'MESTRE 592 PDL', wins: '70', goldPerMinute: '250', damageShare: '8%', pentakills: '0' }
                 },
                 'Tockers': {
@@ -1007,7 +1087,11 @@
                     bio: 'Lenda do cenário brasileiro como jogador, agora comanda a RED Canids como Head Coach. Tetracampeão do CBLOL, traz experiência e liderança inigualáveis.',
                     pastTeams: ['INTZ', 'RED Canids (Player)', 'Vivo Keyd'],
                     matches: [],
-                    championships: [{ name: 'CBLOL (Como Coach)', placement: 'Vários Títulos' }],
+                    championships: [
+                        { name: 'Copa CBLOL 2026', placement: 'Playoffs (Coach)' },
+                        { name: 'CBLOL 2016 - Etapa 2', placement: '1º 🥇 (Player)' },
+                        { name: 'CBLOL 2015 - Etapa 2', placement: '1º 🥇 (Player)' },
+                    ],
                     stats: { mainChampions: ['Draft Kingdom'], kda: 'N/A', winRate: '100% (Draft)', elo: 'N/A', wins: 'N/A', goldPerMinute: 'N/A', damageShare: 'N/A', pentakills: 'N/A' }
                 },
                 // CS2
@@ -1016,8 +1100,17 @@
                     age: '22 anos',
                     bio: 'IGL e rifler, drop traz a experiência internacional de ter jogado Majors pela FURIA e MIBR. É o cérebro por trás das táticas da RED no CS2.',
                     pastTeams: ['FURIA', 'MIBR'],
-                    matches: [{ opponent: 'FURIA', result: 'D 1-2', date: '31/01/26', championship: 'IEM Katowice' }],
-                    championships: [{ name: 'IEM Katowice 2026', placement: '3º-4º' }],
+                    matches: [
+                        { opponent: 'Bestia', result: 'V 2-1', date: '01/02/26', championship: 'IEM Rio Closed Qualifier' },
+                        { opponent: 'Imperial', result: 'V 2-0', date: '31/01/26', championship: 'IEM Rio Closed Qualifier' },
+                        { opponent: 'Sharks', result: 'V 2-0', date: '30/01/26', championship: 'IEM Rio Closed Qualifier' },
+                        { opponent: 'MIBR', result: 'D 1-2', date: '28/01/26', championship: 'Circuit X Curitiba' },
+                    ],
+                    championships: [
+                        { name: 'IEM Rio 2026', placement: 'Qualificado' },
+                        { name: 'Circuit X Curitiba 2026', placement: 'Semifinal' },
+                        { name: 'PGL Major Antwerp 2022', placement: 'Legends Stage' },
+                    ],
                     stats: { mainChampions: ['AK-47', 'M4A1-S'], kda: '1.05 (Rating)', winRate: '55%', elo: 'Premier 25k', wins: '300+', goldPerMinute: 'N/A', damageShare: '78 ADR', pentakills: '0' }
                 },
                 'kauez': {
@@ -1025,8 +1118,14 @@
                     age: '21 anos',
                     bio: 'Um dos maiores talentos de mira do Brasil. Kauez é agressivo e costuma abrir os bombsites com facilidade.',
                     pastTeams: ['FURIA Academy', 'paiN Gaming'],
-                    matches: [],
-                    championships: [],
+                    matches: [
+                        { opponent: 'Bestia', result: 'V 2-1', date: '01/02/26', championship: 'IEM Rio Closed Qualifier' },
+                        { opponent: 'MIBR', result: 'D 1-2', date: '28/01/26', championship: 'Circuit X Curitiba' },
+                    ],
+                    championships: [
+                        { name: 'IEM Rio 2026', placement: 'Qualificado' },
+                        { name: 'CBCS 2025', placement: '1º 🥇' },
+                    ],
                     stats: { mainChampions: ['AK-47'], kda: '1.15 (Rating)', winRate: '58%', elo: 'Premier 28k', wins: '400+', goldPerMinute: 'N/A', damageShare: '85 ADR', pentakills: '1' }
                 },
                 'history': {
@@ -1034,8 +1133,13 @@
                     age: '20 anos',
                     bio: 'AWPer de ofício, history tem um estilo de jogo impactante, buscando picks iniciais que facilitam o round para a equipe.',
                     pastTeams: ['Fluxo'],
-                    matches: [],
-                    championships: [],
+                    matches: [
+                        { opponent: 'Bestia', result: 'V 2-1', date: '01/02/26', championship: 'IEM Rio Closed Qualifier' },
+                        { opponent: 'MIBR', result: 'D 1-2', date: '28/01/26', championship: 'Circuit X Curitiba' },
+                    ],
+                    championships: [
+                        { name: 'IEM Rio 2026', placement: 'Qualificado' },
+                    ],
                     stats: { mainChampions: ['AWP'], kda: '1.12 (Rating)', winRate: '56%', elo: 'Premier 26k', wins: '350+', goldPerMinute: 'N/A', damageShare: '75 ADR', pentakills: '2' }
                 },
                 'chayJESUS': {
@@ -1043,8 +1147,13 @@
                     age: '23 anos',
                     bio: 'Rifler versátil e clutch player. Chay é conhecido por resolver rounds impossíveis e manter a calma em situações de pressão.',
                     pastTeams: ['Sharks'],
-                    matches: [],
-                    championships: [],
+                    matches: [
+                        { opponent: 'Bestia', result: 'V 2-1', date: '01/02/26', championship: 'IEM Rio Closed Qualifier' },
+                        { opponent: 'MIBR', result: 'D 1-2', date: '28/01/26', championship: 'Circuit X Curitiba' },
+                    ],
+                    championships: [
+                        { name: 'IEM Rio 2026', placement: 'Qualificado' },
+                    ],
                     stats: { mainChampions: ['M4A4'], kda: '1.08 (Rating)', winRate: '55%', elo: 'Premier 27k', wins: '320+', goldPerMinute: 'N/A', damageShare: '80 ADR', pentakills: '0' }
                 },
                 'dav1deuS': {
@@ -1052,8 +1161,14 @@
                     age: '24 anos',
                     bio: 'O chileno que conquistou o Brasil. Agressivo e com uma mira afiada, dav1deuS completa o poder de fogo da RED.',
                     pastTeams: ['9z Team', '00 Nation'],
-                    matches: [],
-                    championships: [],
+                    matches: [
+                        { opponent: 'Bestia', result: 'V 2-1', date: '01/02/26', championship: 'IEM Rio Closed Qualifier' },
+                        { opponent: 'MIBR', result: 'D 1-2', date: '28/01/26', championship: 'Circuit X Curitiba' },
+                    ],
+                    championships: [
+                        { name: 'IEM Rio 2026', placement: 'Qualificado' },
+                        { name: 'FiReLEAGUE 2025', placement: '2º 🥈' },
+                    ],
                     stats: { mainChampions: ['AK-47'], kda: '1.10 (Rating)', winRate: '54%', elo: 'Premier 29k', wins: '500+', goldPerMinute: 'N/A', damageShare: '82 ADR', pentakills: '0' }
                 },
                 'tge': {
@@ -1062,7 +1177,9 @@
                     bio: 'Coach experiente que foca muito na parte tática e psicológica do time. Fundamental para manter a consistência da equipe.',
                     pastTeams: ['Paquetá Gaming'],
                     matches: [],
-                    championships: [],
+                    championships: [
+                        { name: 'IEM Rio 2026', placement: 'Qualificado (Coach)' },
+                    ],
                     stats: { mainChampions: ['Tactics'], kda: 'N/A', winRate: 'N/A', elo: 'N/A', wins: 'N/A', goldPerMinute: 'N/A', damageShare: 'N/A', pentakills: 'N/A' }
                 },
                 // Valorant
@@ -1071,8 +1188,11 @@
                     age: '21 anos',
                     bio: 'Duelista nato. Lowz é conhecido por sua Jett agressiva e por não ter medo de buscar o primeiro abate.',
                     pastTeams: ['TBK'],
-                    matches: [{ opponent: 'Leviatan', result: 'V 2-0', date: '15/02/26', championship: 'VCT Americas' }],
-                    championships: [{ name: 'VCT Americas Kickoff', placement: 'Em andamento' }],
+                    matches: [
+                        { opponent: 'Leviatan', result: 'V 2-0', date: '15/02/26', championship: 'VCT Americas' },
+                        { opponent: 'LOUD', result: 'D 1-2', date: '22/02/26', championship: 'VCT Americas' },
+                    ],
+                    championships: [{ name: 'VCT Americas Kickoff 2026', placement: 'Playoffs' }],
                     stats: { mainChampions: ['Jett', 'Raze'], kda: '1.25', winRate: '60%', elo: 'Radiante #10', wins: '80', goldPerMinute: '240 ACS', damageShare: '160 ADR', pentakills: '3' }
                 },
                 'RgLM': {
@@ -1080,9 +1200,54 @@
                     age: '22 anos',
                     bio: 'Jogador flexível que se adapta ao que o time precisa. Pode jogar de iniciador ou controlador com a mesma eficiência.',
                     pastTeams: ['RED Academy'],
-                    matches: [],
-                    championships: [],
+                    matches: [
+                        { opponent: 'Leviatan', result: 'V 2-0', date: '15/02/26', championship: 'VCT Americas' },
+                        { opponent: 'LOUD', result: 'D 1-2', date: '22/02/26', championship: 'VCT Americas' },
+                    ],
+                    championships: [{ name: 'VCT Americas Kickoff 2026', placement: 'Playoffs' }],
                     stats: { mainChampions: ['Omen', 'Viper', 'Skye'], kda: '1.05', winRate: '58%', elo: 'Radiante #45', wins: '65', goldPerMinute: '200 ACS', damageShare: '130 ADR', pentakills: '0' }
+                },
+                'Urango': {
+                    fullName: 'Nome Completo',
+                    age: 'N/A',
+                    bio: 'Iniciador da equipe de Valorant da RED Canids. (Dados completos em breve).',
+                    pastTeams: [],
+                    matches: [
+                        { opponent: 'Leviatan', result: 'V 2-0', date: '15/02/26', championship: 'VCT Americas' },
+                    ],
+                    championships: [{ name: 'VCT Americas Kickoff 2026', placement: 'Playoffs' }],
+                    stats: { mainChampions: ['Sova', 'Fade'], kda: 'N/A', winRate: 'N/A', elo: 'Imortal', wins: 'N/A', goldPerMinute: 'N/A', damageShare: 'N/A', pentakills: 'N/A' }
+                },
+                'skz': {
+                    fullName: 'Nome Completo',
+                    age: 'N/A',
+                    bio: 'Controlador da equipe de Valorant da RED Canids. (Dados completos em breve).',
+                    pastTeams: [],
+                    matches: [
+                        { opponent: 'Leviatan', result: 'V 2-0', date: '15/02/26', championship: 'VCT Americas' },
+                    ],
+                    championships: [{ name: 'VCT Americas Kickoff 2026', placement: 'Playoffs' }],
+                    stats: { mainChampions: ['Omen', 'Astra'], kda: 'N/A', winRate: 'N/A', elo: 'Imortal', wins: 'N/A', goldPerMinute: 'N/A', damageShare: 'N/A', pentakills: 'N/A' }
+                },
+                'tinchoff': {
+                    fullName: 'Nome Completo',
+                    age: 'N/A',
+                    bio: 'Sentinela da equipe de Valorant da RED Canids. (Dados completos em breve).',
+                    pastTeams: [],
+                    matches: [
+                        { opponent: 'Leviatan', result: 'V 2-0', date: '15/02/26', championship: 'VCT Americas' },
+                    ],
+                    championships: [{ name: 'VCT Americas Kickoff 2026', placement: 'Playoffs' }],
+                    stats: { mainChampions: ['Cypher', 'Killjoy'], kda: 'N/A', winRate: 'N/A', elo: 'Radiante', wins: 'N/A', goldPerMinute: 'N/A', damageShare: 'N/A', pentakills: 'N/A' }
+                },
+                'DRAGziKW': {
+                    fullName: 'Nome Completo',
+                    age: 'N/A',
+                    bio: 'Coach da equipe de Valorant da RED Canids. (Dados completos em breve).',
+                    pastTeams: [],
+                    matches: [],
+                    championships: [{ name: 'VCT Americas Kickoff 2026', placement: 'Playoffs (Coach)' }],
+                    stats: { mainChampions: ['Strategy'], kda: 'N/A', winRate: 'N/A', elo: 'N/A', wins: 'N/A', goldPerMinute: 'N/A', damageShare: 'N/A', pentakills: 'N/A' }
                 }
             };
 
@@ -1109,6 +1274,7 @@
                     const playerName = card.querySelector('.player-name').textContent;
                     const playerRole = card.querySelector('.player-role').textContent;
                     const playerImg = card.querySelector('.player-image').style.backgroundImage;
+                    const gameCategory = card.closest('.roster-team')?.dataset.category || 'lol';
 
                     // Busca os dados do jogador. Se não encontrar, usa dados genéricos.
                     const data = playerData[playerName] || {
@@ -1136,32 +1302,7 @@
                         'Los Grandes': 'img/los-logo.png'
                     };
 
-                    // Função para pegar o ícone do Elo (Apenas LoL)
-                    const getRankIcon = (eloString) => {
-                        if (!eloString || eloString === 'N/A') return null;
-                        const tier = eloString.split(' ')[0].toLowerCase(); // Pega a primeira palavra (ex: "CHALLENGER")
-                        
-                        const rankMap = {
-                            'challenger': 'challenger',
-                            'grandmaster': 'grandmaster', 'gm': 'grandmaster',
-                            'grão': 'grandmaster', // Adicionado para suportar "Grão Mestre" em pt-br
-                            'master': 'master',
-                            'diamond': 'diamond',
-                            'emerald': 'emerald',
-                            'platinum': 'platinum',
-                            'gold': 'gold',
-                            'silver': 'silver',
-                            'bronze': 'bronze',
-                            'iron': 'iron'
-                        };
-
-                        if (rankMap[tier]) {
-                            return `https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-shared-components/global/default/images/${rankMap[tier]}.png`;
-                        }
-                        return null;
-                    };
-
-                    const rankIconUrl = getRankIcon(data.stats.elo);
+                    const rankIconUrl = getRankIcon(data.stats.elo, gameCategory);
                     const rankHtml = rankIconUrl ? `<img src="${rankIconUrl}" alt="Rank Icon" style="height: 50px; display: block; margin: 0 auto 5px auto;">` : '';
 
                     // Constrói o HTML do modal dinamicamente
