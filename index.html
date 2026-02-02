@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Canalhas News | Red Canids News</title>
-    <link rel="shortcut icon" href="img/logo.png" type="image/png">
-    <link rel="icon" href="img/logo.png" type="image/png">
+    <link rel="shortcut icon" href="img/redcanalhas-logo.png" type="image/png">
+    <link rel="icon" href="img/redcanalhas-logo.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -618,7 +618,7 @@
 
     <header>
         <a href="index.html" class="logo">
-            <img src="img/logo.png" alt="Canalhas News Logo">
+            <img src="img/redcanalhas-logo.png" alt="Canalhas News Logo">
             <div class="logo-text">
                 Canalhas <span>News</span>
             </div>
@@ -781,7 +781,7 @@
         <div class="footer-container">
             <div class="footer-section about">
                 <div class="logo" style="margin-bottom: 1rem;">
-                    <img src="img/logo.png" alt="Canalhas News Logo">
+                    <img src="img/redcanalhas-logo.png" alt="Canalhas News Logo">
                     <div class="logo-text">
                         Canalhas <span>News</span>
                     </div>
@@ -842,14 +842,14 @@
             const GITHUB_LOGOS_URL = 'https://cdn.jsdelivr.net/gh/flori-sch/League-of-Legends-Team-Logos@main/CBLOL/';
 
             const localTeamLogos = {
-                'LOUD': 'img/loud.png',
-                'paiN Gaming': 'img/logo pain.png',
-                'Vivo Keyd Stars': 'img/logo vk.png',
-                'Leviatan': 'img/logo leviatan.png',
-                'FURIA': 'img/logo furia.png',
-                'Fluxo': 'img/fluxow7m.png',
-                'LOS': 'img/los.png',
-                'Los Grandes': 'img/los.png'
+                'LOUD': 'img/loud-logo.png',
+                'paiN Gaming': 'img/pain-logo.png',
+                'Vivo Keyd Stars': 'img/keyd-stars-logo.png',
+                'Leviatan': 'img/leviatan-logo.png',
+                'FURIA': 'img/furia-esports-logo.png',
+                'Fluxo': 'img/fluxo-logo.png',
+                'LOS': 'img/los-logo.png',
+                'Los Grandes': 'img/los-logo.png'
             };
 
             function getAutoLogo(teamName) {
@@ -933,10 +933,10 @@
                     // Prioriza a logo do JSON, se não tiver, usa a automática
                     // Se for "A Definir", não exibe logo
                     const opponentLogo = (opponentName === 'A Definir') ? null : (match.logo || getAutoLogo(opponentName));
-                    const redLogo = 'img/red.png';
+                    const redLogo = 'img/red-canids-logo.png';
                     
                     const opponentImgHtml = opponentLogo 
-                        ? `<img src="${opponentLogo}" alt="${opponentName}" loading="lazy" onerror="this.onerror=null;this.src='img/logo.png'">`
+                        ? `<img src="${opponentLogo}" alt="${opponentName}" loading="lazy" onerror="this.onerror=null;this.src='img/redcanalhas-logo.png'">`
                         : '';
 
                     const div = document.createElement('div');
@@ -952,7 +952,7 @@
 
                     div.innerHTML = `
                             <div class="team">
-                                <img src="${redLogo}" alt="RED Canids" loading="lazy" onerror="this.src='img/logo.png'">
+                                <img src="${redLogo}" alt="RED Canids" loading="lazy" onerror="this.src='img/redcanalhas-logo.png'">
                                 <span>RED</span>
                             </div>
                             <div class="match-info">
