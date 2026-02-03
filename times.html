@@ -39,8 +39,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: sticky;
-            top: 0;
+            position: relative;
             z-index: 1000;
             border-bottom: 1px solid #333;
         }
@@ -654,6 +653,7 @@
                 border-bottom: 1px solid #333;
                 flex-direction: column;
                 align-items: center;
+                z-index: 2000;
             }
 
             nav.active {
@@ -698,6 +698,19 @@
                 font-size: 0.7rem;
             }
         }
+
+        /* Light Mode */
+        body.light-mode { --black-bg: #f4f4f9; --card-bg: #ffffff; --text-light: #1a1a1a; --text-gray: #4a4a4a; --red-primary: #cc0000; }
+        body.light-mode header, body.light-mode nav { background-color: rgba(255, 255, 255, 0.98); border-bottom: 1px solid #e0e0e0; }
+        body.light-mode .mobile-menu-btn span { background-color: #1a1a1a; }
+        body.light-mode .news-card, body.light-mode .full-article, body.light-mode .about-content, body.light-mode .contact-form, body.light-mode .modal-content, body.light-mode .accordion-header, body.light-mode .champ-card, body.light-mode .player-card, body.light-mode .schedule-item, body.light-mode .schedule-tabs button, body.light-mode .roster-tabs button, body.light-mode .filter-tabs button, body.light-mode .newsletter input { box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #e0e0e0; }
+        body.light-mode .schedule-tabs button:hover, body.light-mode .roster-tabs button:hover, body.light-mode .filter-tabs button:hover { background-color: #e0e0e0; }
+        body.light-mode .footer-bottom { border-top: 1px solid #e0e0e0; }
+        
+        /* Theme Toggle */
+        .header-controls { display: flex; align-items: center; gap: 15px; }
+        .theme-toggle { background: none; border: none; cursor: pointer; color: var(--text-light); padding: 5px; display: flex; align-items: center; justify-content: center; transition: color 0.3s; }
+        .theme-toggle:hover { color: var(--red-primary); }
     </style>
 </head>
 <body>
@@ -709,22 +722,28 @@
                 Canalhas <span>News</span>
             </div>
         </a>
-        <button class="mobile-menu-btn" aria-label="Abrir menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-        <nav>
-            <ul>
-                <li><a href="index.html">Início</a></li>
-                <li><a href="index.html">Notícias</a></li>
-                <li><a href="times.html">Times</a></li>
-                <li><a href="sobre.html">Sobre</a></li>
-                <li><a href="contato.html">Contato</a></li>
-                <li><a href="index.html#schedule">Calendário</a></li>
-                <li><a href="campeonatos.html">Campeonatos</a></li>
-            </ul>
-        </nav>
+        <div class="header-controls">
+            <nav>
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="index.html">Notícias</a></li>
+                    <li><a href="times.html">Times</a></li>
+                    <li><a href="sobre.html">Sobre</a></li>
+                    <li><a href="contato.html">Contato</a></li>
+                    <li><a href="index.html#schedule">Calendário</a></li>
+                    <li><a href="campeonatos.html">Campeonatos</a></li>
+                </ul>
+            </nav>
+            <button class="theme-toggle" aria-label="Alternar tema">
+                <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
+            <button class="mobile-menu-btn" aria-label="Abrir menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
     </header>
 
     <div class="page-wrapper">
@@ -874,6 +893,28 @@
                 // Fecha o menu ao clicar em links
                 nav.querySelectorAll('a').forEach(link => {
                     link.addEventListener('click', () => nav.classList.remove('active'));
+                });
+            }
+
+            // Theme Toggle Logic
+            const themeToggle = document.querySelector('.theme-toggle');
+            const body = document.body;
+            const sunIcon = document.querySelector('.sun-icon');
+            const moonIcon = document.querySelector('.moon-icon');
+
+            if (localStorage.getItem('theme') === 'light') {
+                body.classList.add('light-mode');
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            }
+
+            if(themeToggle) {
+                themeToggle.addEventListener('click', () => {
+                    body.classList.toggle('light-mode');
+                    const isLight = body.classList.contains('light-mode');
+                    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+                    sunIcon.style.display = isLight ? 'none' : 'block';
+                    moonIcon.style.display = isLight ? 'block' : 'none';
                 });
             }
 

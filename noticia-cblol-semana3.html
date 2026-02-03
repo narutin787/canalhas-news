@@ -31,7 +31,7 @@
         :root { --red-primary: #E30613; --red-dark: #8a0000; --black-bg: #0f0f0f; --card-bg: #181818; --text-light: #ffffff; --text-gray: #b0b0b0; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
         body { background-color: var(--black-bg); color: var(--text-light); }
-        header { background-color: rgba(15, 15, 15, 0.95); backdrop-filter: blur(10px); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #333; }
+        header { background-color: rgba(15, 15, 15, 0.95); backdrop-filter: blur(10px); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1000; border-bottom: 1px solid #333; }
         .logo { display: flex; align-items: center; gap: 15px; text-decoration: none; color: var(--text-light); }
         .logo img { height: 50px; width: auto; filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3)); }
         .logo-text { font-family: 'Oswald', sans-serif; font-size: 2.5rem; font-weight: normal; text-transform: uppercase; letter-spacing: -0.5px; line-height: 1; }
@@ -50,8 +50,8 @@
         .article-meta { color: var(--text-gray); font-size: 0.9rem; border-bottom: 1px solid #333; padding-bottom: 1rem; margin-bottom: 2rem; }
         .article-meta strong { color: var(--text-light); }
         .article-image { width: 100%; height: 400px; background-size: cover; background-position: center; margin-bottom: 2rem; border-radius: 4px; }
-        .article-body p { font-size: 1.1rem; line-height: 1.8; color: #ddd; margin-bottom: 1.5rem; }
-        .article-lead { font-size: 1.25rem; line-height: 1.6; color: #fff; font-weight: 500; margin-bottom: 2rem; border-left: 4px solid var(--red-primary); padding-left: 1rem; }
+        .article-body p { font-size: 1.1rem; line-height: 1.8; color: var(--text-light); margin-bottom: 1.5rem; }
+        .article-lead { font-size: 1.25rem; line-height: 1.6; color: var(--text-light); font-weight: 500; margin-bottom: 2rem; border-left: 4px solid var(--red-primary); padding-left: 1rem; }
         .share-section { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #333; }
         .share-btn { background: #333; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: 700; transition: 0.3s; margin-right: 10px; text-transform: uppercase; font-size: 0.8rem; }
         .share-btn:hover { background: var(--red-primary); }
@@ -62,14 +62,30 @@
         .nav-item svg { width: 24px; height: 24px; fill: currentColor; }
         footer { background-color: #000; padding: 3rem 2rem 1rem; margin-top: 4rem; color: var(--text-gray); border-top: 3px solid var(--red-primary); }
         .footer-bottom { text-align: center; padding-top: 1.5rem; border-top: 1px solid #333; font-size: 0.8rem; }
-        @media (max-width: 768px) { .mobile-menu-btn { display: flex; margin-left: auto; } .logo { position: static; transform: none; width: auto; justify-content: flex-start; } .logo-text { font-size: 1.5rem; } .logo img { height: 35px; } nav { display: none; position: absolute; top: 100%; left: 0; width: 100%; background-color: rgba(15, 15, 15, 0.98); padding: 1rem 0; border-bottom: 1px solid #333; flex-direction: column; align-items: center; } nav.active { display: flex; } nav ul { flex-direction: column; gap: 1.5rem; width: 100%; text-align: center; } .page-wrapper { grid-template-columns: 1fr; padding: 1rem; } .sidebar { display: none; } .article-title { font-size: 2rem; line-height: 1.1; } .full-article { padding: 1rem; } .article-image { height: 200px; } }
+        @media (max-width: 768px) { .mobile-menu-btn { display: flex; margin-left: auto; } .logo { position: static; transform: none; width: auto; justify-content: flex-start; } .logo-text { font-size: 1.5rem; } .logo img { height: 35px; } nav { display: none; position: absolute; top: 100%; left: 0; width: 100%; background-color: rgba(15, 15, 15, 0.98); padding: 1rem 0; border-bottom: 1px solid #333; flex-direction: column; align-items: center; z-index: 2000; } nav.active { display: flex; } nav ul { flex-direction: column; gap: 1.5rem; width: 100%; text-align: center; } .page-wrapper { grid-template-columns: 1fr; padding: 1rem; } .sidebar { display: none; } .article-title { font-size: 2rem; line-height: 1.1; } .full-article { padding: 1rem; } .article-image { height: 200px; } }
+
+        /* Light Mode */
+        body.light-mode { --black-bg: #f4f4f9; --card-bg: #ffffff; --text-light: #1a1a1a; --text-gray: #4a4a4a; --red-primary: #cc0000; }
+        body.light-mode header, body.light-mode nav { background-color: rgba(255, 255, 255, 0.98); border-bottom: 1px solid #e0e0e0; }
+        body.light-mode .mobile-menu-btn span { background-color: #1a1a1a; }
+        body.light-mode .news-card, body.light-mode .full-article, body.light-mode .about-content, body.light-mode .contact-form, body.light-mode .modal-content, body.light-mode .accordion-header, body.light-mode .champ-card, body.light-mode .player-card, body.light-mode .schedule-item, body.light-mode .schedule-tabs button, body.light-mode .roster-tabs button, body.light-mode .filter-tabs button, body.light-mode .newsletter input { box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #e0e0e0; }
+        body.light-mode .schedule-tabs button:hover, body.light-mode .roster-tabs button:hover, body.light-mode .filter-tabs button:hover { background-color: #e0e0e0; }
+        body.light-mode .footer-bottom { border-top: 1px solid #e0e0e0; }
+        
+        /* Theme Toggle */
+        .header-controls { display: flex; align-items: center; gap: 15px; }
+        .theme-toggle { background: none; border: none; cursor: pointer; color: var(--text-light); padding: 5px; display: flex; align-items: center; justify-content: center; transition: color 0.3s; }
+        .theme-toggle:hover { color: var(--red-primary); }
     </style>
 </head>
 <body>
     <header>
         <a href="index.html" class="logo"><img src="img/redcanalhas-logo.png" alt="Canalhas News Logo"><div class="logo-text">Canalhas <span>News</span></div></a>
-        <button class="mobile-menu-btn" aria-label="Abrir menu"><span></span><span></span><span></span></button>
-        <nav><ul><li><a href="index.html">Início</a></li><li><a href="index.html">Notícias</a></li><li><a href="times.html">Times</a></li><li><a href="sobre.html">Sobre</a></li><li><a href="contato.html">Contato</a></li><li><a href="index.html#schedule">Calendário</a></li><li><a href="campeonatos.html">Campeonatos</a></li></ul></nav>
+        <div class="header-controls">
+            <nav><ul><li><a href="index.html">Início</a></li><li><a href="index.html">Notícias</a></li><li><a href="times.html">Times</a></li><li><a href="sobre.html">Sobre</a></li><li><a href="contato.html">Contato</a></li><li><a href="index.html#schedule">Calendário</a></li><li><a href="campeonatos.html">Campeonatos</a></li></ul></nav>
+            <button class="theme-toggle" aria-label="Alternar tema"><svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button>
+            <button class="mobile-menu-btn" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+        </div>
     </header>
     <div class="page-wrapper">
         <main class="main-content">
@@ -106,7 +122,27 @@
         </aside>
     </div>
     <footer><div class="footer-bottom"><p>&copy; 2024 Canalhas News - Fã Site da Red Canids Kalunga</p></div></footer>
-    <script>document.addEventListener('DOMContentLoaded', function () { const mobileBtn = document.querySelector('.mobile-menu-btn'); const nav = document.querySelector('nav'); if(mobileBtn) { mobileBtn.addEventListener('click', () => { nav.classList.toggle('active'); }); nav.querySelectorAll('a').forEach(l => l.addEventListener('click', () => nav.classList.remove('active'))); } });</script>
+    <script>document.addEventListener('DOMContentLoaded', function () { const mobileBtn = document.querySelector('.mobile-menu-btn'); const nav = document.querySelector('nav'); if(mobileBtn) { mobileBtn.addEventListener('click', () => { nav.classList.toggle('active'); }); nav.querySelectorAll('a').forEach(l => l.addEventListener('click', () => nav.classList.remove('active'))); } 
+    // Theme Toggle Logic
+    const themeToggle = document.querySelector('.theme-toggle');
+    const body = document.body;
+    const sunIcon = document.querySelector('.sun-icon');
+    const moonIcon = document.querySelector('.moon-icon');
+    if (localStorage.getItem('theme') === 'light') {
+        body.classList.add('light-mode');
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+    }
+    if(themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+            const isLight = body.classList.contains('light-mode');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            sunIcon.style.display = isLight ? 'none' : 'block';
+            moonIcon.style.display = isLight ? 'block' : 'none';
+        });
+    }
+    });</script>
     
     <!-- JSON-LD -->
     <script type="application/ld+json">
