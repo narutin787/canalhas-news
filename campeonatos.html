@@ -9,559 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --red-primary: #E30613;
-            --red-dark: #8a0000;
-            --black-bg: #0f0f0f;
-            --card-bg: #181818;
-            --text-light: #ffffff;
-            --text-gray: #b0b0b0;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Roboto', sans-serif;
-        }
-
-        body {
-            background-color: var(--black-bg);
-            color: var(--text-light);
-        }
-
-        /* Header */
-        header {
-            background-color: rgba(15, 15, 15, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-            z-index: 9999;
-            border-bottom: 1px solid #333;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            text-decoration: none;
-            color: var(--text-light);
-        }
-
-        .logo img {
-            height: 70px;
-            width: auto;
-            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
-        }
-
-        .logo-text {
-            font-family: 'Oswald', sans-serif;
-            font-size: 2.5rem;
-            font-weight: normal;
-            text-transform: uppercase;
-            letter-spacing: -0.5px;
-            line-height: 1;
-        }
-
-        .logo-text span {
-            font-family: 'Oswald', sans-serif;
-            color: var(--red-primary);
-            font-size: 1.1em;
-            font-weight: normal;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 20px;
-        }
-
-        nav a {
-            color: var(--text-light);
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            transition: color 0.3s ease;
-        }
-
-        nav a:hover {
-            color: var(--red-primary);
-        }
-
-        /* Mobile Menu Styles */
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            cursor: pointer;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .mobile-menu-btn span {
-            width: 25px;
-            height: 3px;
-            background-color: var(--text-light);
-            transition: 0.3s;
-        }
-
-        /* Page Layout */
-        .page-wrapper {
-            padding: 2rem;
-            display: grid;
-            grid-template-columns: 80px 1fr;
-            gap: 2rem;
-        }
-
-        .main-content {
-            max-width: 1200px;
-            justify-self: center;
-            width: 100%;
-        }
-
-        /* Section Titles */
-        h2.section-title {
-            position: relative;
-            margin-bottom: 4rem;
-            font-size: 2.5rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            text-align: center;
-            color: var(--red-primary);
-        }
-
-        /* Tabs */
-        .filter-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 3rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-tabs button {
-            background-color: var(--card-bg);
-            color: var(--text-light);
-            border: 1px solid #333;
-            padding: 10px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-        }
-
-        .filter-tabs button:hover {
-            background-color: #333;
-            transform: translateY(-2px);
-        }
-
-        .filter-tabs button.active {
-            background-color: var(--red-primary);
-            color: white;
-            border-color: var(--red-primary);
-        }
-
-        /* Championship List */
-        .champ-list {
-            display: grid;
-            gap: 1.5rem;
-        }
-
-        .champ-card {
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            border-left: 5px solid var(--red-primary);
-            transition: transform 0.3s;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .champ-header {
-            padding: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-            width: 100%;
-            transition: background-color 0.3s ease;
-        }
-
-        .champ-header:hover {
-            background-color: #222;
-        }
-
-        .champ-info {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .champ-name {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: var(--text-light);
-        }
-
-        .champ-meta {
-            color: var(--text-gray);
-            font-size: 0.9rem;
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .champ-tag {
-            background-color: #333;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            font-weight: 700;
-        }
-
-        .champ-status {
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-        }
-
-        .status-active {
-            background-color: rgba(76, 175, 80, 0.2);
-            color: #4caf50;
-            border: 1px solid #4caf50;
-        }
-
-        .status-finished {
-            background-color: rgba(158, 158, 158, 0.2);
-            color: #9e9e9e;
-            border: 1px solid #9e9e9e;
-        }
-
-        .status-future {
-            background-color: rgba(33, 150, 243, 0.2);
-            color: #2196f3;
-            border: 1px solid #2196f3;
-        }
-
-        .toggle-icon {
-            transition: transform 0.3s;
-            color: var(--text-gray);
-        }
-        
-        .champ-header.active .toggle-icon {
-            transform: rotate(180deg);
-            color: var(--red-primary);
-        }
-
-        /* Table Styles */
-        .champ-details {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            background-color: #111;
-        }
-        
-        .table-responsive {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9rem;
-        }
-
-        th, td {
-            padding: 12px 24px;
-            text-align: left;
-            border-bottom: 1px solid #222;
-        }
-
-        th {
-            color: var(--text-gray);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            font-weight: 700;
-        }
-
-        td {
-            color: var(--text-light);
-        }
-
-        .team-cell {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 600;
-        }
-
-        .team-logo-mini {
-            width: 20px;
-            height: 20px;
-            object-fit: contain;
-        }
-        
-        .rank {
-            color: var(--text-gray);
-            font-weight: 700;
-        }
-        
-        .highlight-row {
-            background-color: rgba(227, 6, 19, 0.1);
-        }
-        
-        .highlight-row .rank {
-            color: var(--red-primary);
-        }
-
-        @media (max-width: 768px) {
-            .champ-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-            }
-            .champ-status {
-                align-self: flex-start;
-            }
-        }
-
-        /* Sidebar */
-        .sidebar {
-            order: -1;
-        }
-
-        .sidebar-nav {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2rem;
-            position: sticky;
-            top: 100px;
-        }
-
-        .nav-item {
-            color: var(--text-gray);
-            transition: color 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            font-size: 0.7rem;
-            font-weight: 600;
-            gap: 5px;
-            text-align: center;
-        }
-
-        .nav-item:hover {
-            color: var(--red-primary);
-        }
-
-        .nav-item svg {
-            width: 24px;
-            height: 24px;
-            fill: currentColor;
-        }
-
-        /* Footer */
-        footer {
-            background-color: #000;
-            padding: 3rem 2rem 1rem;
-            margin-top: 4rem;
-            color: var(--text-gray);
-            border-top: 3px solid var(--red-primary);
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto 2rem auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .footer-section h4 {
-            font-size: 1.1rem;
-            color: var(--text-light);
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-        }
-
-        .footer-section.about .logo {
-            margin-bottom: 1rem;
-        }
-
-        .footer-section.about p {
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        .social-links {
-            display: flex;
-            flex-direction: row;
-            gap: 15px;
-        }
-
-        .social-links a {
-            color: var(--text-gray);
-            text-decoration: none;
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
-
-        .social-links a:hover {
-            color: var(--red-primary);
-            transform: translateY(-3px);
-        }
-
-        .social-links svg {
-            width: 24px;
-            height: 24px;
-            fill: currentColor;
-        }
-
-        .newsletter form {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .newsletter input {
-            background-color: var(--card-bg);
-            border: 1px solid #333;
-            padding: 12px;
-            border-radius: 4px;
-            color: var(--text-light);
-            font-family: 'Roboto', sans-serif;
-            margin-bottom: 10px;
-        }
-
-        .newsletter button {
-            background-color: var(--red-primary);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 700;
-            text-transform: uppercase;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-
-        .newsletter button:hover {
-            background-color: var(--red-dark);
-            transform: translateY(-2px);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 1.5rem;
-            border-top: 1px solid #333;
-            font-size: 0.8rem;
-        }
-
-        @media (max-width: 768px) {
-            .mobile-menu-btn {
-                display: flex;
-                margin-left: auto;
-            }
-
-            .logo {
-                position: static;
-                transform: none;
-                width: auto;
-                justify-content: flex-start;
-            }
-
-            .logo-text {
-                font-size: 1.5rem;
-            }
-
-            .logo img {
-                height: 50px;
-            }
-
-            nav {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background-color: rgba(15, 15, 15, 0.98);
-                padding: 1rem 0;
-                border-bottom: 1px solid #333;
-                flex-direction: column;
-                align-items: center;
-                z-index: 10000;
-            }
-
-            nav.active {
-                display: flex;
-            }
-
-            nav ul {
-                flex-direction: column;
-                gap: 1.5rem;
-                width: 100%;
-                text-align: center;
-            }
-
-            .page-wrapper {
-                grid-template-columns: 1fr;
-                padding: 1rem;
-            }
-
-            .sidebar {
-                display: none;
-            }
-
-            /* Mobile Championship Cards */
-            .champ-header {
-                padding: 1.2rem;
-                gap: 1rem;
-            }
-
-            .champ-name {
-                font-size: 1.2rem;
-            }
-
-            .champ-meta {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 8px;
-            }
-
-            .champ-card {
-                box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-                margin-bottom: 1rem;
-            }
-
-            th, td {
-                padding: 10px 15px;
-                font-size: 0.85rem;
-            }
-        }
-
-        /* Light Mode */
-        body.light-mode { --black-bg: #f4f4f9; --card-bg: #ffffff; --text-light: #1a1a1a; --text-gray: #4a4a4a; --red-primary: #cc0000; }
-        body.light-mode header, body.light-mode nav { background-color: rgba(255, 255, 255, 0.98); border-bottom: 1px solid #e0e0e0; }
-        body.light-mode .mobile-menu-btn span { background-color: #1a1a1a; }
-        body.light-mode .news-card, body.light-mode .full-article, body.light-mode .about-content, body.light-mode .contact-form, body.light-mode .modal-content, body.light-mode .accordion-header, body.light-mode .champ-card, body.light-mode .player-card, body.light-mode .schedule-item, body.light-mode .schedule-tabs button, body.light-mode .roster-tabs button, body.light-mode .filter-tabs button, body.light-mode .newsletter input { box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #e0e0e0; }
-        body.light-mode .schedule-tabs button:hover, body.light-mode .roster-tabs button:hover, body.light-mode .filter-tabs button:hover { background-color: #e0e0e0; }
-        body.light-mode .footer-bottom { border-top: 1px solid #e0e0e0; }
-        
-        /* Theme Toggle */
-        .header-controls { display: flex; align-items: center; gap: 15px; }
-        .theme-toggle { background: none; border: none; cursor: pointer; color: var(--text-light); padding: 5px; display: flex; align-items: center; justify-content: center; transition: color 0.3s; }
-        .theme-toggle:hover { color: var(--red-primary); }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -576,8 +24,9 @@
             <nav>
                 <ul>
                     <li><a href="index.html">Início</a></li>
-                    <li><a href="index.html">Notícias</a></li>
+                    <li><a href="noticias.html">Notícias</a></li>
                     <li><a href="times.html">Times</a></li>
+                    <li><a href="creators.html">Creators</a></li>
                     <li><a href="sobre.html">Sobre</a></li>
                     <li><a href="contato.html">Contato</a></li>
                     <li><a href="index.html#schedule">Calendário</a></li>
@@ -624,67 +73,40 @@
                         </div>
                     </div>
                     <div class="champ-details">
-                        <div class="table-responsive">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Pos</th>
-                                        <th>Time</th>
-                                        <th>V - D</th>
-                                        <th>Aprov.</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="rank">1</td>
-                                        <td><div class="team-cell"><img src="img/los-logo.png" class="team-logo-mini"> LOS</div></td>
-                                        <td>6 - 1</td>
-                                        <td>86%</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="rank">2</td>
-                                        <td><div class="team-cell"><img src="img/furia-esports-logo.png" class="team-logo-mini"> FURIA</div></td>
-                                        <td>5 - 2</td>
-                                        <td>71%</td>
-                                    </tr>
-                                    <tr class="highlight-row">
-                                        <td class="rank">3</td>
-                                        <td><div class="team-cell"><img src="img/red-canids-logo.png" class="team-logo-mini"> RED Canids</div></td>
-                                        <td>5 - 2</td>
-                                        <td>71%</td>
-                                    </tr>
-                                     <tr>
-                                        <td class="rank">4</td>
-                                        <td><div class="team-cell"><img src="img/keyd-stars-logo.png" class="team-logo-mini"> Vivo Keyd Stars</div></td>
-                                        <td>3 - 4</td>
-                                        <td>43%</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="rank">5</td>
-                                        <td><div class="team-cell"><img src="img/loud-logo.png" class="team-logo-mini"> LOUD</div></td>
-                                        <td>3 - 4</td>
-                                        <td>43%</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="rank">6</td>
-                                        <td><div class="team-cell"><img src="img/fluxo-logo.png" class="team-logo-mini"> Fluxo W7M</div></td>
-                                        <td>2 - 5</td>
-                                        <td>29%</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="rank">7</td>
-                                        <td><div class="team-cell"><img src="img/pain-logo.png" class="team-logo-mini"> paiN Gaming</div></td>
-                                        <td>2 - 5</td>
-                                        <td>29%</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="rank">8</td>
-                                        <td><div class="team-cell"><img src="img/leviatan-logo.png" class="team-logo-mini"> Leviatan</div></td>
-                                        <td>2 - 5</td>
-                                        <td>29%</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div class="playoffs-structure">
+                            <!-- Upper Bracket -->
+                            <div class="bracket-column">
+                                <h4 class="bracket-title">Upper Bracket</h4>
+                                
+                                <div class="bracket-round">
+                                    <h5 class="round-title">Semifinais (Upper)</h5>
+                                    <!-- Jogo 1 -->
+                                    <div class="match-card">
+                                        <div class="match-team winner">
+                                            <span>RED Canids</span>
+                                            <span>2</span>
+                                        </div>
+                                        <div class="match-team loser">
+                                            <span>FURIA</span>
+                                            <span>0</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bracket-round">
+                                    <h5 class="round-title">Final Upper</h5>
+                                    <div class="match-card">
+                                        <div class="match-team">
+                                            <span>RED Canids</span>
+                                            <span>-</span>
+                                        </div>
+                                        <div class="match-team">
+                                            <span>LOUD</span>
+                                            <span>-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -916,7 +338,11 @@
                     <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
                     <span>Times</span>
                 </a>
-                <a href="campeonatos.html" class="nav-item" title="Campeonatos">
+                <a href="creators.html" class="nav-item" title="Creators">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <span>Creators</span>
+                </a>
+                <a href="campeonatos.html" class="nav-item" title="Campeonatos" style="color:var(--red-primary);">
                     <svg viewBox="0 0 24 24"><path d="M20.2 2H3.8C2.8 2 2 2.8 2 3.8V6c0 3.1 2.3 5.7 5.3 6 1.3 2.3 3.6 3.9 6.2 4v2H9v2h6v-2h-4.5c2.6-.1 4.9-1.7 6.2-4 3-.3 5.3-2.9 5.3-6V3.8c0-1-.8-1.8-1.8-1.8zM4 6V4h3v3.6C5.1 7.2 4 6.2 4 6zm13 1.6V4h3v2c0 1.8-1.1 3.2-3 3.6z"/></svg>
                     <span>Camp.</span>
                 </a>
@@ -959,46 +385,11 @@
         </div>
     </footer>
 
+    <script src="js/main.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const tabs = document.querySelectorAll('.filter-tabs button');
             const cards = document.querySelectorAll('.champ-card');
-
-            // Mobile Menu Logic
-            const mobileBtn = document.querySelector('.mobile-menu-btn');
-            const nav = document.querySelector('nav');
-
-            if(mobileBtn) {
-                mobileBtn.addEventListener('click', () => {
-                    nav.classList.toggle('active');
-                });
-                // Fecha o menu ao clicar em links
-                nav.querySelectorAll('a').forEach(link => {
-                    link.addEventListener('click', () => nav.classList.remove('active'));
-                });
-            }
-
-            // Theme Toggle Logic
-            const themeToggle = document.querySelector('.theme-toggle');
-            const body = document.body;
-            const sunIcon = document.querySelector('.sun-icon');
-            const moonIcon = document.querySelector('.moon-icon');
-
-            if (localStorage.getItem('theme') === 'light') {
-                body.classList.add('light-mode');
-                sunIcon.style.display = 'none';
-                moonIcon.style.display = 'block';
-            }
-
-            if(themeToggle) {
-                themeToggle.addEventListener('click', () => {
-                    body.classList.toggle('light-mode');
-                    const isLight = body.classList.contains('light-mode');
-                    localStorage.setItem('theme', isLight ? 'light' : 'dark');
-                    sunIcon.style.display = isLight ? 'none' : 'block';
-                    moonIcon.style.display = isLight ? 'block' : 'none';
-                });
-            }
 
             // Tabs Logic
             tabs.forEach(tab => {
@@ -1012,6 +403,16 @@
                         const category = card.getAttribute('data-category');
                         if (filter === 'all' || filter === category) {
                             card.style.display = 'flex';
+                            // Re-evaluate accordion state when card becomes visible
+                            const header = card.querySelector('.champ-header');
+                            const content = card.querySelector('.champ-details');
+                            if (header && content) {
+                                if (header.classList.contains('active')) {
+                                    content.style.maxHeight = content.scrollHeight + "px";
+                                } else {
+                                    content.style.maxHeight = null;
+                                }
+                            }
                         } else {
                             card.style.display = 'none';
                         }

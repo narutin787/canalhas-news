@@ -92,7 +92,7 @@ async function fetchMatches() {
     } catch (error) {
         console.error('Falha ao buscar dados:', error);
         // Não quebra o build, apenas avisa
-        process.exit(1);
+        process.exit(0);
     }
 }
 

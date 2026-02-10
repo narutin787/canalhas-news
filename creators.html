@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creators | Canalhas News</title>
+    <link rel="shortcut icon" href="img/redcanalhas-logo.png" type="image/png">
+    <link rel="icon" href="img/redcanalhas-logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">
+            <img src="img/redcanalhas-logo.png" alt="Canalhas News Logo">
+            <div class="logo-text">
+                Canalhas <span>News</span>
+            </div>
+        </a>
+        <div class="header-controls">
+            <nav>
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="noticias.html">Notícias</a></li>
+                    <li><a href="times.html">Times</a></li>
+                    <li><a href="creators.html">Creators</a></li>
+                    <li><a href="sobre.html">Sobre</a></li>
+                    <li><a href="contato.html">Contato</a></li>
+                    <li><a href="#schedule">Calendário</a></li>
+                    <li><a href="campeonatos.html">Campeonatos</a></li>
+                </ul>
+            </nav>
+            <button class="theme-toggle" aria-label="Alternar tema">
+                <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
+            <button class="mobile-menu-btn" aria-label="Abrir menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="page-wrapper">
+        <main class="main-content">
+            <section id="creators-page">
+                <h2 class="section-title" style="text-align: center; color: var(--red-primary);">CREATORS DA MATILHA</h2>
+                <p style="text-align: center; color: var(--text-gray); margin-top: -2rem; margin-bottom: 3rem;">Conheça os influenciadores que carregam a bandeira da matilha.</p>
+                
+                <div class="search-container">
+                    <input type="text" id="creatorSearch" placeholder="Buscar creator por nome...">
+                </div>
+
+                <div class="creators-grid">
+                    <!-- Peu -->
+                    <div class="player-card" data-creator="Peu">
+                        <div class="player-image" style="background-image: url('img/img-creator/peu.jpg')"></div>
+                        <div class="player-info">
+                            <span class="player-role">Creator</span>
+                            <span class="player-name">Peu</span>
+                            <span class="image-source">Reprodução/Redes Sociais</span>
+                        </div>
+                    </div>
+
+                    <!-- Iasser -->
+                    <div class="player-card" data-creator="Iasser">
+                        <div class="player-image" style="background-image: url('img/img-creator/iasser.jpg')"></div>
+                        <div class="player-info">
+                            <span class="player-role">Creator</span>
+                            <span class="player-name">Iasser</span>
+                            <span class="image-source">Reprodução/Redes Sociais</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item" title="Início">
+                    <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                    <span>Início</span>
+                </a>
+                <a href="noticias.html" class="nav-item" title="Notícias">
+                    <svg viewBox="0 0 24 24"><path d="M20 3H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h3l-1 1v2h12v-2l-1-1h3c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 13H4V5h16v11zM6 8h12v2H6zm0 4h12v2H6z"/></svg>
+                    <span>Notícias</span>
+                </a>
+                <a href="index.html#schedule" class="nav-item" title="Agenda">
+                    <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+                    <span>Agenda</span>
+                </a>
+                <a href="times.html" class="nav-item" title="Times">
+                    <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                    <span>Times</span>
+                </a>
+                <a href="creators.html" class="nav-item" title="Creators" style="color:var(--red-primary);">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <span>Creators</span>
+                </a>
+                <a href="campeonatos.html" class="nav-item" title="Campeonatos">
+                    <svg viewBox="0 0 24 24"><path d="M20.2 2H3.8C2.8 2 2 2.8 2 3.8V6c0 3.1 2.3 5.7 5.3 6 1.3 2.3 3.6 3.9 6.2 4v2H9v2h6v-2h-4.5c2.6-.1 4.9-1.7 6.2-4 3-.3 5.3-2.9 5.3-6V3.8c0-1-.8-1.8-1.8-1.8zM4 6V4h3v3.6C5.1 7.2 4 6.2 4 6zm13 1.6V4h3v2c0 1.8-1.1 3.2-3 3.6z"/></svg>
+                    <span>Camp.</span>
+                </a>
+            </nav>
+        </aside>
+    </div>
+
+    <footer>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Canalhas News - Fã Site da Red Canids Kalunga</p>
+        </div>
+    </footer>
+
+    <!-- Creator Modal -->
+    <div class="modal-overlay" id="creatorModal">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <div id="modal-container">
+                <!-- O conteúdo do modal será injetado aqui pelo JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Dados dos Creators
+            const creatorData = {
+                'Peu': {
+                    name: 'Peu',
+                    role: 'Creator',
+                    games: ['Voleibol', 'League of Legends'],
+                    bio: 'Peu é um dos creators que representam a RED Canids com autenticidade e carisma. Conhecido pelo seu jeito descontraído e pela proximidade com a comunidade, ele construiu uma base fiel de seguidores produzindo conteúdos que misturam entretenimento, gameplay e muita interação. Dentro do time da RED, Peu se destaca por fortalecer a conexão entre a organização e os fãs, levando a identidade da matilha para além das competições e mostrando que a RED também vive de personalidade, criatividade e presença constante nas redes.',
+                    socials: {
+                        twitch: 'https://www.twitch.tv/peeuzinholol',
+                        twitter: 'https://x.com/peuzinholol',
+                        instagram: 'https://www.instagram.com/peuzinholol/'
+                    },
+                    videos: []
+                },
+                'Iasser': {
+                    name: 'Iasser',
+                    role: 'Creator',
+                    games: ['League of Legends', 'Variedades'],
+                    bio: 'Iasser é um dos creators da RED Canids que se destaca pela comunicação direta e pela forte presença nas redes. Com conteúdos focados em entretenimento, gameplay e interação constante com o público, ele conquistou espaço por seu carisma e autenticidade. Representando a RED, Iasser ajuda a ampliar o alcance da organização, fortalecendo a comunidade e levando a energia da matilha para além dos campeonatos, sempre com uma identidade própria e próxima dos fãs.',
+                    socials: {
+                        twitch: 'https://www.twitch.tv/iasserzinlol',
+                        twitter: 'https://x.com/iasserzinlol',
+                        instagram: 'https://www.instagram.com/iasserzinlol/'
+                    },
+                    videos: []
+                }
+            };
+
+            // Lógica do Modal
+            const modal = document.getElementById('creatorModal');
+            const closeBtn = document.querySelector('.modal-close');
+            const modalContainer = document.getElementById('modal-container');
+            const cards = document.querySelectorAll('.player-card');
+            const searchInput = document.getElementById('creatorSearch');
+
+            // Busca
+            if(searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    const term = e.target.value.toLowerCase();
+                    cards.forEach(card => {
+                        const name = card.querySelector('.player-name').textContent.toLowerCase();
+                        card.style.display = name.includes(term) ? 'block' : 'none';
+                    });
+                });
+            }
+
+            cards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const creatorName = card.getAttribute('data-creator');
+                    const data = creatorData[creatorName];
+                    const imgUrl = card.querySelector('.player-image').style.backgroundImage;
+                    const safeImg = imgUrl ? imgUrl.replace(/"/g, "'") : '';
+
+                    if (!data) return;
+
+                    // Gera HTML dos vídeos
+                    const videosHtml = data.videos.length > 0 ? data.videos.map(v => `
+                        <div style="margin-bottom: 20px;">
+                            <h5 style="color:white; margin-bottom:10px;">${v.title}</h5>
+                            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 4px; border: 1px solid #333;">
+                                <iframe src="${v.embedUrl}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                            <a href="${v.originalUrl}" target="_blank" style="display:block; margin-top:5px; color:var(--red-primary); font-size:0.8rem; text-decoration:none;">Assistir no original &rarr;</a>
+                        </div>
+                    `).join('') : '<p>Nenhum vídeo disponível no momento.</p>';
+
+                    // Gera HTML das Redes Sociais
+                    const socialsHtml = `
+                        <div style="display:flex; gap:15px; margin-top:10px;">
+                            ${data.socials.twitch ? `<a href="${data.socials.twitch}" target="_blank" style="color:var(--red-primary); font-weight:bold; text-decoration:none;">Twitch</a>` : ''}
+                            ${data.socials.twitter ? `<a href="${data.socials.twitter}" target="_blank" style="color:var(--red-primary); font-weight:bold; text-decoration:none;">Twitter/X</a>` : ''}
+                            ${data.socials.instagram ? `<a href="${data.socials.instagram}" target="_blank" style="color:var(--red-primary); font-weight:bold; text-decoration:none;">Instagram</a>` : ''}
+                        </div>
+                    `;
+
+                    modalContainer.innerHTML = `
+                        <div class="modal-header">
+                            <div class="modal-player-img" style="background-image: ${safeImg}"></div>
+                            <div class="modal-player-info">
+                                <h3 class="modal-name">${data.name}</h3>
+                                <span class="modal-role">${data.role}</span>
+                                <p style="color:var(--text-gray); font-size:0.9rem; margin-top:5px;">Jogos: ${data.games.join(', ')}</p>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <div class="accordion-inner">
+                                <h4 style="color:white; margin-bottom:10px;">Sobre</h4>
+                                <p>${data.bio}</p>
+                                
+                                <h4 style="color:white; margin-top:20px; margin-bottom:10px;">Redes Sociais</h4>
+                                ${socialsHtml}
+
+                                <h4 style="color:white; margin-top:20px; margin-bottom:10px;">Vídeos em Destaque</h4>
+                                ${videosHtml}
+                            </div>
+                        </div>
+                    `;
+
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+
+            closeBtn.addEventListener('click', () => {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
