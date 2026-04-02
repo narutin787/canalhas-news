@@ -428,6 +428,7 @@ h2.section-title {
     border-radius: 4px;
     overflow: hidden;
     text-align: center;
+    position: relative;
     transition: transform 0.3s, box-shadow 0.3s;
     border-bottom: 3px solid var(--red-primary);
 }
@@ -440,7 +441,7 @@ h2.section-title {
 .creator-image-wrapper {
     height: 280px;
     background-size: cover;
-    background-position: center;
+    background-position: center top;
     background-color: #333;
     position: relative;
     clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
@@ -462,6 +463,8 @@ h2.section-title {
     display: flex;
     justify-content: center;
     gap: 20px;
+    position: relative;
+    z-index: 2;
 }
 
 .creator-socials a {
@@ -822,7 +825,7 @@ body.light-mode .footer-bottom {
 
 /* Creators Page Specifics */
 .creators-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
-.creators-grid .player-image { height: 400px; }
+.creators-grid .player-image { height: 350px; background-position: center top; }
 .creators-grid .player-name { font-size: 1.6rem; margin-bottom: 0.5rem; }
 .creators-grid .player-role { font-size: 1rem; }
 
@@ -905,6 +908,7 @@ body.light-mode .footer-bottom {
 .champ-status { font-size: 0.75rem; padding: 4px 8px; border-radius: 4px; font-weight: 700; text-transform: uppercase; }
 .status-active { background-color: rgba(76, 175, 80, 0.1); color: #4caf50; border: 1px solid rgba(76, 175, 80, 0.3); }
 .status-future { background-color: rgba(33, 150, 243, 0.1); color: #2196f3; border: 1px solid rgba(33, 150, 243, 0.3); }
+.status-finished { background-color: rgba(158, 158, 158, 0.1); color: #9e9e9e; border: 1px solid rgba(158, 158, 158, 0.3); }
 
 .toggle-icon { transition: transform 0.3s; }
 .champ-header.active .toggle-icon { transform: rotate(180deg); }
